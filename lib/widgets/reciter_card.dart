@@ -158,7 +158,8 @@ class _DownloadBadge extends StatelessWidget {
               width: 24,
               height: 24,
               child: CircularProgressIndicator(
-                value: progress > 0 ? progress : null,
+                value: progress > 0 ? progress
+                    : null,
                 strokeWidth: 2.5,
                 color: emerald,
               ),

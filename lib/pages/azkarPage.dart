@@ -58,7 +58,7 @@ class _AzkarpageState extends State<Azkarpage> {
         future: _future,
         builder: (context, snap) {
           if (snap.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator(color: emerald,));
           }
           if (snap.hasError) {
             return Center(child: Text('${snap.error}'));
@@ -163,7 +163,7 @@ class _AzkarDetailPageState extends State<AzkarDetailPage> {
         future: _future,
         builder: (context, snap) {
           if (snap.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator(color: emerald,));
           }
           if (snap.hasError) {
             return Center(child: Text('${snap.error}'));

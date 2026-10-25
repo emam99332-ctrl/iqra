@@ -107,7 +107,7 @@ class _SurahState extends State<Surahpage>{
           ),
           FutureBuilder<List<Surah>>(future: ApiService.getSurahs(), builder: (context, snap){
             if(snap.connectionState == ConnectionState.waiting){
-              return Center(child: CircularProgressIndicator());
+              return Center(child: CircularProgressIndicator(color: emerald,));
             }
             if(snap.hasError){
               return Center(child: Text('${snap.error}', style: TextStyle(fontFamily: 'ar'),));

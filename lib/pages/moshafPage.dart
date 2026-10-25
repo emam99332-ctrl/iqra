@@ -333,7 +333,7 @@ class _SurahViewState extends State<SurahView> {
       future: _future,
       builder: (context, snap) {
         if (snap.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator(color: emerald,));
         }
         if (snap.hasError) {
           return Center(child: Text('${snap.error}'));

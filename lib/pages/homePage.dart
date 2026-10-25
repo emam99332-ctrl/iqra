@@ -234,7 +234,7 @@ class _HomepageState extends State<Homepage> {
                     ? Card(
                   child: ListTile(tileColor: gold,
                     leading: const Icon(Icons.radio, color: emerald),
-                    title: const Text('إذاعة تعمل', textAlign: TextAlign.right,style: TextStyle(color: emerald, fontFamily: 'ar', fontWeight: FontWeight.bold),),
+                    title: const Text('الإذاعة تعمل', textAlign: TextAlign.right,style: TextStyle(color: emerald, fontFamily: 'ar', fontWeight: FontWeight.bold),),
                     trailing: IconButton(
                       icon: const Icon(Icons.stop, color: emerald,),
                       onPressed: RadioService.instance.stop,

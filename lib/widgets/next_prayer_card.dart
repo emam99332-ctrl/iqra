@@ -19,7 +19,7 @@ class NextPrayerCard extends StatelessWidget {
             child: Container(decoration: BoxDecoration(gradient: LinearGradient(colors: [emerald.withOpacity(.7), gold.withOpacity(.7)]), borderRadius: BorderRadius.circular(10)),
               padding: const EdgeInsets.all(20),
               child: next == null
-                  ? const Center(child: CircularProgressIndicator())
+                  ? const Center(child: CircularProgressIndicator(color: emerald,))
                   : Column(
                 children: [
                   Text(
