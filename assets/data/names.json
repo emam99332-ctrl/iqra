@@ -1,0 +1,695 @@
+[
+  {
+    "id": 1,
+    "name": "الرحمن",
+    "transliteration": "Ar-Rahman",
+    "english_translation": "The Most Merciful",
+    "description": "يدل اسم الرحمن على رحمة الله الشاملة والواسعة لجميع الخلائق في الدنيا، حيث تفيض نِعمه على الجميع دون استثناء."
+  },
+  {
+    "id": 2,
+    "name": "الرحيم",
+    "transliteration": "Ar-Rahim",
+    "english_translation": "The Most Compassionate",
+    "description": "يدل اسم الرحيم على رحمة الله الخاصة بالمؤمنين في الدنيا والآخرة، والتي تهديهم وتوصلهم إلى جنات النعيم."
+  },
+  {
+    "id": 3,
+    "name": "الملك",
+    "transliteration": "Al-Malik",
+    "english_translation": "The King",
+    "description": "المالك لجميع الكائنات والمتصرف فيها بملكه المطلق وسلطانه الشامل الذي لا يزول ولا يحده حد."
+  },
+  {
+    "id": 4,
+    "name": "القدوس",
+    "transliteration": "Al-Quddus",
+    "english_translation": "The Pure One",
+    "description": "المنزه عن كل نقص وعيب، المقدَّس عن الشبيه والمثيل، البالغ أقصى درجات الطهارة والكمال."
+  },
+  {
+    "id": 5,
+    "name": "السلام",
+    "transliteration": "As-Salam",
+    "english_translation": "The Source of Peace",
+    "description": "السالم من كل عيب ونقص، والذي يفيض السلام والأمان على خلقه وينشر الاطمئنان في كونه."
+  },
+  {
+    "id": 6,
+    "name": "المؤمن",
+    "transliteration": "Al-Mu'min",
+    "english_translation": "The Guardian of Faith",
+    "description": "المصدق لرسله بالمعجزات، والذي يمنح عباده المؤمنين الأمان والأمن من الخوف والعذاب في الدنيا والآخرة."
+  },
+  {
+    "id": 7,
+    "name": "المهيمن",
+    "transliteration": "Al-Muhaymin",
+    "english_translation": "The Protector",
+    "description": "الرقيب والحافظ والمهيمن على كل شيء في الكون، الذي يعلم كل صغيرة وكبيرة ولا يخرج شيء عن سلطانه."
+  },
+  {
+    "id": 8,
+    "name": "العزيز",
+    "transliteration": "Al-Aziz",
+    "english_translation": "The Almighty",
+    "description": "القوي القاهر الذي لا يُغلب، وله العزة والمنعة المطلقة، ويهب العزة والكرامة لمن يشاء من عباده."
+  },
+  {
+    "id": 9,
+    "name": "الجبار",
+    "transliteration": "Al-Jabbar",
+    "english_translation": "The Compeller",
+    "description": "الذي يجبر كسر الضعفاء ويغني الفقراء، وتنفذ مشيئته وقدرته في خلقه رغماً عن كل شيء بحكمة وعدل."
+  },
+  {
+    "id": 10,
+    "name": "المتكبر",
+    "transliteration": "Al-Mutakabbir",
+    "english_translation": "The Supreme",
+    "description": "المتعالي عن صفات النقص وعن الظلم والشرور، صاحب العظمة الكبرياء التي لا يدانيه فيها أحد."
+  },
+  {
+    "id": 11,
+    "name": "الخالق",
+    "transliteration": "Al-Khaliq",
+    "english_translation": "The Creator",
+    "description": "الموجد للأشياء من العدم على غير مثال سابق، المبتكر لكل ما في الكون بحكمة وتدبير."
+  },
+  {
+    "id": 12,
+    "name": "البارئ",
+    "transliteration": "Al-Bari'",
+    "english_translation": "The Evolver",
+    "description": "الذي يبرئ الخلق ويبرزهم من العدم إلى الوجود بالصورة والنسب المتناسقة وبإتقان تام."
+  },
+  {
+    "id": 13,
+    "name": "المصور",
+    "transliteration": "Al-Musawwir",
+    "english_translation": "The Fashioner",
+    "description": "الذي يشكل المخلوقات ويصورها وهيئاتها المختلفة بأبهى صورة وأعظم إبداع وفخامة."
+  },
+  {
+    "id": 14,
+    "name": "الغفار",
+    "transliteration": "Al-Ghaffar",
+    "english_translation": "The Constant Forgiver",
+    "description": "الستّار للذنوب والعيوب، الذي يغفر لنسائه وعباده المرة تلو الأخرى كلما تابوا وأنابوا إليه."
+  },
+  {
+    "id": 15,
+    "name": "القهار",
+    "transliteration": "Al-Qahhar",
+    "english_translation": "The Subduer",
+    "description": "الغالب الذي خضعت له الرقاب وعنت له الوجوه، ولا يستطيع أحد الخروج عن قهر سلطانه وقدرته."
+  },
+  {
+    "id": 16,
+    "name": "الوهاب",
+    "transliteration": "Al-Wahhab",
+    "english_translation": "The Bestower",
+    "description": "كثير العطاء والتفضل الذي يهب النعم والنعم الجسيمة بلا مقابل ولا حاجة إلى عوض."
+  },
+  {
+    "id": 17,
+    "name": "الرزاق",
+    "transliteration": "Ar-Razzaq",
+    "english_translation": "The Provider",
+    "description": "المتكفل بقوت جميع المخلوقات ورزقهم المادي والمعنوي، وتأمين كافة احتياجاتهم المعيشية."
+  },
+  {
+    "id": 18,
+    "name": "الفتاح",
+    "transliteration": "Al-Fattah",
+    "english_translation": "The Opener",
+    "description": "الذي يفتح أبواب الرحمة والرزق، ويحكم بين عباده بالعدل، ويفتح المغلقات ويسهل الصعاب."
+  },
+  {
+    "id": 19,
+    "name": "العليم",
+    "transliteration": "Al-‘Alim",
+    "english_translation": "The All-Knowing",
+    "description": "المحيط بكل شيء علماً؛ ما كان وما سيكون وما لم يكن لو كان كيف يكون، لا يخفى عليه مثقال ذرة."
+  },
+  {
+    "id": 20,
+    "name": "القابض",
+    "transliteration": "Al-Qabid",
+    "english_translation": "The Withholder",
+    "description": "الذي يقبض الأرواح والأرزاق بحكمته وعدله ابتلاءً أو تقديراً لما فيه الخير لكتلة الخلق."
+  },
+  {
+    "id": 21,
+    "name": "الباسط",
+    "transliteration": "Al-Basit",
+    "english_translation": "The Expander",
+    "description": "الذي يبسط الرزق والرحمة برحمته وفضله الواسع، ويوحد أسباب الخير والبركة لمن يشاء."
+  },
+  {
+    "id": 22,
+    "name": "الخافض",
+    "transliteration": "Al-Khafid",
+    "english_translation": "The Abaser",
+    "description": "الذي يخفض الجبابرة والمتكبرين ويضع قدرهم، ويهوي بمكانة الظالمين بحكمته وعدله."
+  },
+  {
+    "id": 23,
+    "name": "الرافع",
+    "transliteration": "Ar-Rafi'",
+    "english_translation": "The Exalter",
+    "description": "الذي يرفع درجات المؤمنين والصالحين في الدنيا والآخرة بالفضل والعز والمنزلة العالية."
+  },
+  {
+    "id": 24,
+    "name": "المعز",
+    "transliteration": "Al-Mu'izz",
+    "english_translation": "The Bestower of Honor",
+    "description": "الذي يهب العزة والكرامة والرفعة لمن يشاء من عباده الصالحين والمؤمنين."
+  },
+  {
+    "id": 25,
+    "name": "المذل",
+    "transliteration": "Al-Mudhill",
+    "english_translation": "The Humiliator",
+    "description": "الذي يذل العاصين والمستكبرين ويجردهم من أسباب العزة والجاه عند مخالفتهم لأمره."
+  },
+  {
+    "id": 26,
+    "name": "السميع",
+    "transliteration": "As-Sami'",
+    "english_translation": "The All-Hearing",
+    "description": "الذي يسمع كل الاصوات والدعوات في الأرض والسماء، لا يشغله صوت عن صوت ولا يخفى عليه سر."
+  },
+  {
+    "id": 27,
+    "name": "البصير",
+    "transliteration": "Al-Basir",
+    "english_translation": "The All-Seeing",
+    "description": "الذي يبصر كل شيء في ملكوته، فلا تحجب عنه الظلمات شيئاً ولا تغيب عنه خافية."
+  },
+  {
+    "id": 28,
+    "name": "الحكم",
+    "transliteration": "Al-Hakam",
+    "english_translation": "The Judge",
+    "description": "الحاكم العدل الذي يقضي بين خلقه بالحق، ولا يظلم أحداً، وتنفذ أحكامه بكل حكمة."
+  },
+  {
+    "id": 29,
+    "name": "العدل",
+    "transliteration": "Al-'Adl",
+    "english_translation": "The Just",
+    "description": "العادل الذي لا يجور في حكمه، والقائم بالعدل المطلق في كافة أفعاله وتدبيره."
+  },
+  {
+    "id": 30,
+    "name": "اللطيف",
+    "transliteration": "Al-Latif",
+    "english_translation": "The Subtle One",
+    "description": "البر بعباده، اللطيف بهم في تدبيره، الذي يوصل إليهم المنافع والخيرات بطرق خفية لا يشعرون بها."
+  },
+  {
+    "id": 31,
+    "name": "الخبير",
+    "transliteration": "Al-Khabir",
+    "english_translation": "The All-Aware",
+    "description": "العالم بخفايا الأمور وبواطنها ودقائقها، الذي لا يعزب عنه سر في الصدور ولا خبيئة في الأرض."
+  },
+  {
+    "id": 32,
+    "name": "الحليم",
+    "transliteration": "Al-Halim",
+    "english_translation": "The Forbearing",
+    "description": "الصبور المتأني الذي لا يعاجل العصاة بالعقوبة، بل يمهلهم ليتوبوا ويرجعوا إلى الحق."
+  },
+  {
+    "id": 33,
+    "name": "العظيم",
+    "transliteration": "Al-Azim",
+    "english_translation": "The Magnificent",
+    "description": "ذو العظمة والرفعة والمجد الذي تضاءلت لعظمته عقول الخلائق وخضعت له المخلوقات."
+  },
+  {
+    "id": 34,
+    "name": "الغفور",
+    "transliteration": "Al-Ghafur",
+    "english_translation": "The All-Forgiving",
+    "description": "كثير المغفرة للذنوب والسيئات، الذي يستر على عباده ويصفح عن زلاتهم الواحدة تلو الأخرى."
+  },
+  {
+    "id": 35,
+    "name": "الشكور",
+    "transliteration": "Ash-Shakur",
+    "english_translation": "The Appreciative",
+    "description": "الذي يقبل القليل من العمل الصالح ويثيب عليه بالأجر الجزيل والخير العظيم."
+  },
+  {
+    "id": 36,
+    "name": "العلي",
+    "transliteration": "Al-‘Aliyy",
+    "english_translation": "The Most High",
+    "description": "المتعالي بذاته وصفاته وقدره فوق كل شيء، صاحب المكانة والسلطان الأعلى مطلقاً."
+  },
+  {
+    "id": 37,
+    "name": "الكبير",
+    "transliteration": "Al-Kabir",
+    "english_translation": "The Most Great",
+    "description": "العظيم في ذاته وصفاته، الذي كل شيء دونه صغير وحقير بالنسبة لعظمته وكبريائه."
+  },
+  {
+    "id": 38,
+    "name": "الحفيظ",
+    "transliteration": "Al-Hafiz",
+    "english_translation": "The Preserver",
+    "description": "الحافظ لكل شيء في كونه، الذي يحمي عباده ويحفظ أعمالهم وسجلاتهم ولا يضل ولا ينسى."
+  },
+  {
+    "id": 39,
+    "name": "المقيت",
+    "transliteration": "Al-Muqit",
+    "english_translation": "The Sustainer",
+    "description": "المتكفل بتقديم الأقوات والأغذية لأبدان الخلائق وأرواحهم، والشهيد المقتدر على كل شيء."
+  },
+  {
+    "id": 40,
+    "name": "الحسيب",
+    "transliteration": "Al-Hasib",
+    "english_translation": "The Reckoner",
+    "description": "الذي يكفي عباده كافّة الاحتياجات، ويحاسب الخلائق يوم القيامة بدقة وعدل تام."
+  },
+  {
+    "id": 41,
+    "name": "الجليل",
+    "transliteration": "Al-Jalil",
+    "english_translation": "The Majestic",
+    "description": "صاحب الجلال والعظمة المطلقة في الذات والصفات، المستحق لغاية التعظيم والإجلال."
+  },
+  {
+    "id": 42,
+    "name": "الكريم",
+    "transliteration": "Al-Karim",
+    "english_translation": "The Generous",
+    "description": "كثير الخير والجود، الذي يعطي بلا حساب وبلا مقابل، ولا يضيع من أمل فيه وترجاه."
+  },
+  {
+    "id": 43,
+    "name": "الرقيب",
+    "transliteration": "Ar-Raqib",
+    "english_translation": "The Watchful",
+    "description": "الرقيب الذي لا يغفل ولا يغيب عنه شيء، المطلع على أعمال العباد وضمائرهم في كل وقت."
+  },
+  {
+    "id": 44,
+    "name": "المجيب",
+    "transliteration": "Al-Mujib",
+    "english_translation": "The Responsive",
+    "description": "الذي يجيب دعاء الداعين، ويلبي نداء المضطرين، ويقضي حوائج السائلين بفضله."
+  },
+  {
+    "id": 45,
+    "name": "الواسع",
+    "transliteration": "Al-Wasi'",
+    "english_translation": "The All-Encompassing",
+    "description": "الواسع في رحمته وعلمه وغناه وفضله، الذي وسع كرسيه السماوات والأرض."
+  },
+  {
+    "id": 46,
+    "name": "الحكيم",
+    "transliteration": "Al-Hakim",
+    "english_translation": "The Wise",
+    "description": "الذي يضع الأشياء في مواضعها الصحيحة، وجميع أفعاله وأوامره مبنية على الحكمة المطلقة."
+  },
+  {
+    "id": 47,
+    "name": "الودود",
+    "transliteration": "Al-Wadud",
+    "english_translation": "The Loving",
+    "description": "المحب لعباده الصالحين والمحبوب لديهم، الذي ينشر الود والرحمة في قلوب أولائه."
+  },
+  {
+    "id": 48,
+    "name": "المجيد",
+    "transliteration": "Al-Majid",
+    "english_translation": "The Glorious",
+    "description": "شريف الذات، واسع الكرم والجود، صاحب المجد والثناء البالغ أقصى درجات الشرف."
+  },
+  {
+    "id": 49,
+    "name": "الباعث",
+    "transliteration": "Al-Ba'ith",
+    "english_translation": "The Resurrector",
+    "description": "الذي يبعث الرسل إلى الخلق لإرشادهم، ويحيي الموتى ويبعثهم من القبور للحساب والجزاء."
+  },
+  {
+    "id": 50,
+    "name": "الشهيد",
+    "transliteration": "Ash-Shahid",
+    "english_translation": "The Witness",
+    "description": "الذي لا يغيب عنه شيء، المطلع على كل الحوادث والمشهودات والضمائر في الكون."
+  },
+  {
+    "id": 51,
+    "name": "الحق",
+    "transliteration": "Al-Haqq",
+    "english_translation": "The Truth",
+    "description": "الثابت الوجود بالذات، الحق في قوله ووعده وفشله، الذي لا يطرق الباطل جنبه."
+  },
+  {
+    "id": 52,
+    "name": "الوكيل",
+    "transliteration": "Al-Wakil",
+    "english_translation": "The Trustee",
+    "description": "القيم بأمور خلقه، المتكفل بمصالحهم، الذي يعتمد عليه المؤمنون في كافة شؤونهم."
+  },
+  {
+    "id": 53,
+    "name": "القوي",
+    "transliteration": "Al-Qawiyy",
+    "english_translation": "The All-Strong",
+    "description": "صاحب القدرة والالقوة الكاملة الشاملة التي لا يعتريها ضعف ولا يعجزها شيء."
+  },
+  {
+    "id": 54,
+    "name": "المتين",
+    "transliteration": "Al-Matin",
+    "english_translation": "The Firm",
+    "description": "الحديث القوة والقدرة، الشديد المتين الذي لا يطرق قوته وهن ولا انقطاع."
+  },
+  {
+    "id": 55,
+    "name": "الولي",
+    "transliteration": "Al-Waliyy",
+    "english_translation": "The Protecting Friend",
+    "description": "الناصر والحافظ والولي لأوليائه المؤمنين، يتولى أمورهم بالنصر والتوفيق والرعاية."
+  },
+  {
+    "id": 56,
+    "name": "الحميد",
+    "transliteration": "Al-Hamid",
+    "english_translation": "The Praiseworthy",
+    "description": "المستحق لجميع أنواع الحمد والثناء في كل وقت وحال، لفيض كماله ونعمه على الخلق."
+  },
+  {
+    "id": 57,
+    "name": "المحصي",
+    "transliteration": "Al-Muhsi",
+    "english_translation": "The Accounter",
+    "description": "الذي أحصى كل شيء بعلمه، فلا يفوته عدد ولا يفوت من حسابه شيء صغيراً كان أو كبيراً."
+  },
+  {
+    "id": 58,
+    "name": "المبدئ",
+    "transliteration": "Al-Mubdi'",
+    "english_translation": "The Originator",
+    "description": "الذي بدأ خلق الأشياء وأوجدها من العدم بفضله وقدرته ودون مثال سابق."
+  },
+  {
+    "id": 59,
+    "name": "المعيد",
+    "transliteration": "Al-Mu'id",
+    "english_translation": "The Restorer",
+    "description": "الذي يعيد الخلق بعد الفناء إلى الحياة مرة أخرى للحساب والجزاء يوم القيامة."
+  },
+  {
+    "id": 60,
+    "name": "المحيي",
+    "transliteration": "Al-Muhyi",
+    "english_translation": "The Giver of Life",
+    "description": "الذي يوهب الحياة لكل حي، ويحيي العظام وهي رميم بقدرته المطلقة."
+  },
+  {
+    "id": 61,
+    "name": "المميت",
+    "transliteration": "Al-Mumit",
+    "english_translation": "The Bringer of Death",
+    "description": "الذي يسلب الحياة عن الأحياء ويميتم متى شاء وكيف شاء بمقتضى حكمته."
+  },
+  {
+    "id": 62,
+    "name": "الحي",
+    "transliteration": "Al-Hayy",
+    "english_translation": "The Ever-Living",
+    "description": "الحي بالحياة الدائمة الكاملة التي لا بداية لها ولا نهاية، المنزه عن الموت والفناء."
+  },
+  {
+    "id": 63,
+    "name": "القيوم",
+    "transliteration": "Al-Qayyum",
+    "english_translation": "The Sustainer",
+    "description": "القائم بنفسه الاستغناء عن غيره، والقائم بأمور كافة المخلوقات وحفظها وإدارتها."
+  },
+  {
+    "id": 64,
+    "name": "الواجد",
+    "transliteration": "Al-Wajid",
+    "english_translation": "The Perceiver",
+    "description": "الذي لا يعوزه شيء ولا يفتقر إلى شيء، الغني الواجد لكل ما يريد."
+  },
+  {
+    "id": 65,
+    "name": "الماجد",
+    "transliteration": "Al-Majid",
+    "english_translation": "The Illustrious",
+    "description": "صاحب المجد والشرف والكرم العظيم، الذي فاضت عطاءاته وشملت كبرياؤه العوالم."
+  },
+  {
+    "id": 66,
+    "name": "الواحد",
+    "transliteration": "Al-Wahid",
+    "english_translation": "The One",
+    "description": "المتفرد بالذات والصفات والأفعال، الذي لا شريك له ولا نظير ولا شبيه."
+  },
+  {
+    "id": 67,
+    "name": "الاحد",
+    "transliteration": "Al-Ahad",
+    "english_translation": "The Unique",
+    "description": "الأحد المتفرد بالوحدانية المطلقة، الذي لا يتجزأ ولا يتركب وليس له كفؤاً أحد."
+  },
+  {
+    "id": 68,
+    "name": "الصمد",
+    "transliteration": "As-Samad",
+    "english_translation": "The Eternal Refuge",
+    "description": "المقصود في الحوائج كلها، الذي يصمد إليه الخلائق في رغباتهم ويتكلون عليه."
+  },
+  {
+    "id": 69,
+    "name": "القادر",
+    "transliteration": "Al-Qadir",
+    "english_translation": "The Omnipotent",
+    "description": "صاحب القدرة الشاملة على إيجاد المقدورات وإعدامها وفق مشيئته وإرادته."
+  },
+  {
+    "id": 70,
+    "name": "المقتدر",
+    "transliteration": "Al-Muqtadir",
+    "english_translation": "The Creator of All Power",
+    "description": "المقتدر الذي التقت عنده أسباب القوة والقدرة، المظهر لمقتضى قدرته في خلقه."
+  },
+  {
+    "id": 71,
+    "name": "المقدم",
+    "transliteration": "Al-Muqaddim",
+    "english_translation": "The Expediter",
+    "description": "الذي يقدم الأشياء ويضعها في مواضعها وفق حكمته، ويقدم من يشاء من العباد بالفضل."
+  },
+  {
+    "id": 72,
+    "name": "المؤخر",
+    "transliteration": "Al-Mu'akhkhir",
+    "english_translation": "The Delayer",
+    "description": "الذي يؤخر الأشياء ويؤجلها إلى أوقاتها المحددة بحكمته، ويؤخر من يشاء بفضله وعدله."
+  },
+  {
+    "id": 73,
+    "name": "الأول",
+    "transliteration": "Al-Awwal",
+    "english_translation": "The First",
+    "description": "الذي لم يكن قبله شيء، أزلي الوجود بلا بداية."
+  },
+  {
+    "id": 74,
+    "name": "الأخر",
+    "transliteration": "Al-Akhir",
+    "english_translation": "The Last",
+    "description": "الذي لا يكون بعده شيء، أبدي الوجود بلا نهاية."
+  },
+  {
+    "id": 75,
+    "name": "الظاهر",
+    "transliteration": "Az-Zahir",
+    "english_translation": "The Manifest",
+    "description": "الظاهر بآياته وبراهين قدرته القاطعة، العالي فوق كل شيء بسلطانه."
+  },
+  {
+    "id": 76,
+    "name": "الباطن",
+    "transliteration": "Al-Batin",
+    "english_translation": "The Hidden",
+    "description": "الباطن الاحتجاب عن أبصار الخلائق، العالم ببواطن الأمور وخفايا الصدور."
+  },
+  {
+    "id": 77,
+    "name": "الوالي",
+    "transliteration": "Al-Wali",
+    "english_translation": "The Patron",
+    "description": "المتولي لأمور خلقه والسلطان الذي يدبر شؤون الملك والمملكة بمفرده."
+  },
+  {
+    "id": 78,
+    "name": "المتعالي",
+    "transliteration": "Al-Muta'ali",
+    "english_translation": "The Self-Exalted",
+    "description": "المتنزه عن صفات المخلوقين والنقص، المرتفع بقدرته وعظمته فوق كل حد."
+  },
+  {
+    "id": 79,
+    "name": "البر",
+    "transliteration": "Al-Barr",
+    "english_translation": "The Source of All Goodness",
+    "description": "العطوف المحسن على خلقه، كثير البر والإحسان الذي يعم بفضله الجميع."
+  },
+  {
+    "id": 80,
+    "name": "التواب",
+    "transliteration": "At-Tawwab",
+    "english_translation": "The Acceptor of Repentance",
+    "description": "الذي يقبل توبة التائبين المرة تلو الأخرى، ويغفر الذنوب ويزيل أثرها."
+  },
+  {
+    "id": 81,
+    "name": "المنتقم",
+    "transliteration": "Al-Muntaqim",
+    "english_translation": "The Avenger",
+    "description": "الذي يعاقب الظالمين والجاحدين بعد إنذارهم، وينتصر للمظلومين بالعدل."
+  },
+  {
+    "id": 82,
+    "name": "العفو",
+    "transliteration": "Al-Afuww",
+    "english_translation": "The Pardoner",
+    "description": "الذي يمحو السيئات ويتجاوز عن الذنوب ويترك العقوبة كأنه لم تكن."
+  },
+  {
+    "id": 83,
+    "name": "الرؤوف",
+    "transliteration": "Ar-Ra'uf",
+    "english_translation": "The Most Kind",
+    "description": "الشديد الرحمة والرأفة بعباده، اللطيف بهم في أوقات الشدة والرخاء."
+  },
+  {
+    "id": 84,
+    "name": "مالك الملك",
+    "transliteration": "Malik-ul-Mulk",
+    "english_translation": "Master of the Kingdom",
+    "description": "صاحب الملك المطلق في السماوات والأرض، يتصرف في ملكه كيف يشاء."
+  },
+  {
+    "id": 85,
+    "name": "ذوالجلال\nوالإكرام",
+    "transliteration": "Dhul-Jalali wal-Ikram",
+    "english_translation": "Possessor of Glory and Honor",
+    "description": "صاحب العظمة والكبرياء والاستحقاق المطلق للتعظيم والإكرام والجود."
+  },
+  {
+    "id": 86,
+    "name": "المقسط",
+    "transliteration": "Al-Muqsit",
+    "english_translation": "The Just",
+    "description": "العادل في حكمه الذي ينصف المظلوم من الظالم ويقيم العدل والقسط في كونه."
+  },
+  {
+    "id": 87,
+    "name": "الجامع",
+    "transliteration": "Al-Jami'",
+    "english_translation": "The Gatherer",
+    "description": "الذي يجمع الخلائق يوم القيامة للحساب، ويجمع الأضداد والأشياء المتفرقة بحكمته."
+  },
+  {
+    "id": 88,
+    "name": "الغني",
+    "transliteration": "Al-Ghaniyy",
+    "english_translation": "The Self-Sufficient",
+    "description": "المستغني عن جميع خلقه، الذي لا يحتاج إلى أحد وكل الخلق محتاجون إليه."
+  },
+  {
+    "id": 89,
+    "name": "المغني",
+    "transliteration": "Al-Mughni",
+    "english_translation": "The Enricher",
+    "description": "الذي يغني من يشاء من عباده بالمال أو القناعة أو الإيمان واليقين."
+  },
+  {
+    "id": 90,
+    "name": "المانع",
+    "transliteration": "Al-Mani'",
+    "english_translation": "The Withholder",
+    "description": "الذي يمنع البلاء عن عباده بحفظه، ويمنع العطاء أو الأسباب بحكمته وعدله."
+  },
+  {
+    "id": 91,
+    "name": "الضار",
+    "transliteration": "Ad-Darr",
+    "english_translation": "The Distresser",
+    "description": "الذي بيده الضر ابتلاءً أو عقوبة، فلا يكشف الضر إلا هو ولا يصيبه إلا بمشيئته."
+  },
+  {
+    "id": 92,
+    "name": "النافع",
+    "transliteration": "An-Nafi'",
+    "english_translation": "The Benefiter",
+    "description": "الذي بيده النفع والخير والبركة، فيوصل المنافع لمن يشاء من عباده."
+  },
+  {
+    "id": 93,
+    "name": "النور",
+    "transliteration": "An-Nur",
+    "english_translation": "The Light",
+    "description": "نور السماوات والأرض الذي يبصر بنوره العميان، ويهدي بهداته الحائرين."
+  },
+  {
+    "id": 94,
+    "name": "الهادي",
+    "transliteration": "Al-Hadi",
+    "english_translation": "The Guide",
+    "description": "الذي يهدي القلوب إلى الحق، ويرشد المخلوقات إلى مصالحها وهدايتها."
+  },
+  {
+    "id": 95,
+    "name": "البديع",
+    "transliteration": "Al-Badi'",
+    "english_translation": "The Incomparable Originator",
+    "description": "الذي أبدع الخلق وصنعه على غير مثال سابق، المبتكر لأشكال الكون بجمال وروعة."
+  },
+  {
+    "id": 96,
+    "name": "الباقي",
+    "transliteration": "Al-Baqi",
+    "english_translation": "The Ever-Surviving",
+    "description": "الدائم الوجود الذي لا يفنى ولا يبيد، الباقي بعد فناء كل المخلوقات."
+  },
+  {
+    "id": 97,
+    "name": "الوارث",
+    "transliteration": "Al-Warith",
+    "english_translation": "The Inheritor",
+    "description": "الذي يرث الأرض ومن عليها، ويبقى بعد فناء الخلائق وإليه مرجع كل شيء."
+  },
+  {
+    "id": 98,
+    "name": "الرشيد",
+    "transliteration": "Ar-Rashid",
+    "english_translation": "The Guide to the Right Path",
+    "description": "الذي يرشد خلقه إلى مصالحهم بحكمته، ويدبر أمورهم على طريق الصواب والشاد."
+  },
+  {
+    "id": 99,
+    "name": "الصبور",
+    "transliteration": "As-Sabur",
+    "english_translation": "The Patient",
+    "description": "الذي لا يعاجل العصاة بالعقوبة بل يصبر عليهم ليتوبوا، ذو الصبر التام والأناة."
+  }
+]

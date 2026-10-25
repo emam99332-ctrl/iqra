@@ -1,0 +1,76 @@
+name: iqra
+description: "Iqra app"
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.12.2
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+  http: ^1.6.0
+  just_audio: ^0.10.6
+  geolocator: ^14.1.2
+  flutter_compass: ^0.8.1
+  adhan: ^2.0.0+1
+  geocoding: ^5.0.0
+  path_provider: ^2.1.6
+  just_audio_background: ^0.0.1-beta.17
+  audio_service: ^0.18.19
+  flutter_local_notifications: ^19.4.0
+  timezone: ^0.10.0
+  shared_preferences: ^2.3.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+  flutter_launcher_icons: ^0.14.4
+  flutter_native_splash: ^2.4.8
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/
+    - assets/buttons/
+    - assets/data/
+    - assets/reciters/
+  fonts:
+    - family: Amiri
+      fonts:
+        - asset: assets/fonts/Amiri-Regular.ttf
+          weight: 700
+    - family: ar
+      fonts:
+        - asset: assets/fonts/Sans-regular.ttf
+          weight: 700
+    - family: me
+      fonts:
+        - asset: assets/fonts/me_quran.ttf
+          weight: 700
+    - family: Kufi
+      fonts:
+        - asset: assets/fonts/Kufi-Bold.ttf
+          weight: 700
+
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/logo.png"
+  adaptive_icon_background: "#FAF6EC"
+  adaptive_icon_foreground: "assets/logo.png"
+
+flutter_native_splash:
+  color: "#FAF6EC"
+  image: assets/logo.png
+
+  color_dark: "#03382B"
+  image_dark: assets/logo.png
+
+  android: true
+  ios: true
