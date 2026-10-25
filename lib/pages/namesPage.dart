@@ -31,7 +31,9 @@ class Namespage extends StatelessWidget {
             return Center(child: Text('${snap.error}'));
           }
           final names = snap.data!;
-          return GridView.builder(
+          return Directionality(
+            textDirection: TextDirection.rtl,
+            child: GridView.builder(
             padding: const EdgeInsets.all(12),
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
@@ -41,7 +43,7 @@ class Namespage extends StatelessWidget {
             ),
             itemCount: names.length,
             itemBuilder: (context, i) => _NameCard(item: names[i]),
-          );
+          ));
         },
       ),
     );

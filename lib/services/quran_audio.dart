@@ -75,7 +75,7 @@ class QuranAudio extends ChangeNotifier {
     return true;
   }
 
-  Future<void> playFromSurah(int startSurah) async {
+  Future<void> playFromSurah(int startSurah, {int startAyah = 1, bool stopAtSurahEnd = false}) async {
     final session = ++_session;
     unawaited(RadioService.instance.stop());
     isPlaying = true;
@@ -93,12 +93,31 @@ class QuranAudio extends ChangeNotifier {
           ApiService.getSurahAyahs(surah + 1).then((_) {}, onError: (_) {});
         }
 
+        // أول سورة تبدأ من الآية المختارة، وما بعدها من أولها
+        final fromAyah = surah == startSurah ? startAyah : 1;
+
+        // البسملة فقط عند بداية السورة (عدا الفاتحة والتوبة)
+        if (fromAyah == 1 && surah != 1 && surah != 9) {
+          playingAyahNumber = null;
+          notifyListeners();
+          final basmala = Ayah(
+            number: 1,
+            numberInSurah: 1,
+            surahNumber: 1,
+            surahName: ayahs.first.surahName,
+            text: '',
+          );
+          if (!await _playOnce(basmala, session)) return;
+        }
+
         for (final ayah in ayahs) {
+          if (ayah.numberInSurah < fromAyah) continue;
           if (session != _session) return;
           playingAyahNumber = ayah.number;
           notifyListeners();
           if (!await _playOnce(ayah, session)) return;
         }
+        if (stopAtSurahEnd) return;
       }
     } finally {
       if (session == _session) _clear();

@@ -25,6 +25,12 @@ class ReciterSettings extends ChangeNotifier {
     ReciterOption('minshawy','المنشاوي', 'https://everyayah.com/data/Minshawy_Murattal_128kbps'),
     ReciterOption('abubakr','أبو بكر الشاطري', 'https://everyayah.com/data/Abu_Bakr_Ash-Shaatree_128kbps'),
     ReciterOption('hani','هاني الرفاعي', 'https://everyayah.com/data/Hani_Rifai_192kbps'),
+    ReciterOption('yasser', 'ياسر الدوسري', 'https://everyayah.com/data/Yasser_Ad-Dussary_128kbps'),
+    ReciterOption('ajamy', 'أحمد العجمي', 'https://everyayah.com/data/ahmed_ibn_ali_al_ajamy_128kbps'),
+    ReciterOption('fares', 'فارس عباد', 'https://everyayah.com/data/Fares_Abbad_64kbps'),
+    ReciterOption('qatami', 'ناصر القطامي', 'https://everyayah.com/data/Nasser_Alqatami_128kbps'),
+    ReciterOption('ghamdi', 'سعد الغامدي', 'https://everyayah.com/data/Ghamadi_40kbps'),
+    ReciterOption('alijaber', 'علي جابر', 'https://everyayah.com/data/Ali_Jaber_64kbps'),
   ];
 
   int _selected = 0;
