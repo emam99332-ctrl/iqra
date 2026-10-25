@@ -8,8 +8,6 @@ import 'package:iqra/services/reciter_settings.dart';
 import 'package:iqra/styles/style.dart';
 import 'package:iqra/services/reciter_downloads.dart';
 
-const bismillah = 'بــِسْم ٱلـلـَّهِ ٱلـرَّحـْمـَٰنِ ٱلـرَّحِيمِ';
-
 String toArabicDigits(int n) => n
     .toString()
     .split('')
@@ -89,8 +87,46 @@ class BismillahHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(bottom: 16),
+      padding: EdgeInsets.only(bottom: 10),
       child: Image.asset('assets/Basmala.png')
+    );
+  }
+}
+
+class ImageTextFrame extends StatelessWidget {
+  final String text;
+  final String imagePath;
+  final TextStyle? textStyle;
+
+  const ImageTextFrame({
+    super.key,
+    required this.text,
+    this.imagePath = 'assets/frame.png',
+    this.textStyle,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return  Stack(
+        alignment: Alignment.center,
+        children: [
+          Image.asset(
+            imagePath,
+          ),
+          Center(
+            child: Text(
+              text,
+              textAlign: TextAlign.center,
+              style: textStyle ??
+                  const TextStyle(
+                    fontFamily: 'me',
+                    color: cream,
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                  ),
+            ),
+          ),
+        ],
     );
   }
 }
@@ -456,12 +492,13 @@ class _SurahViewState extends State<SurahView> {
         }
         final ayahs = snap.data!;
         return SingleChildScrollView(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
           child: ListenableBuilder(
             listenable: widget.audio,
             builder: (context, _) => Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
+                ImageTextFrame(text: ayahs.first.surahName,),
                 if (widget.surah != 1 && widget.surah != 9)
                   const BismillahHeader(),
                 Text.rich(

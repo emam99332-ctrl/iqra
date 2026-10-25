@@ -116,10 +116,7 @@ class AdhanService extends ChangeNotifier {
     }
     if (!enabled) return;
 
-    final exact = await _android?.canScheduleExactNotifications() ?? false;
-    final mode = exact
-        ? AndroidScheduleMode.exactAllowWhileIdle
-        : AndroidScheduleMode.inexactAllowWhileIdle;
+    const mode = AndroidScheduleMode.alarmClock;
 
     final params = CalculationMethod.egyptian.getParameters();
     final now = DateTime.now();
