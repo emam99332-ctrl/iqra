@@ -114,4 +114,4 @@ lib/
 
 ## License
 
-Add the license you choose for your code here (for example MIT), and list the licenses of the fonts, images and audio files you use.
+No license has been specified yet. All rights to the original project code are reserved by the copyright holder, except where otherwise stated. Third-party assets remain subject to their respective licenses and permissions.
