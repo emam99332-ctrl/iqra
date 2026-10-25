@@ -46,7 +46,7 @@ flutter:
           weight: 700
     - family: ar
       fonts:
-        - asset: assets/fonts/Sans-regular.ttf
+        - asset: assets/fonts/Sans-Regular.ttf
           weight: 700
     - family: me
       fonts:

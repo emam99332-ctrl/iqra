@@ -40,7 +40,6 @@ class PrayerService extends ChangeNotifier {
   Coordinates? _coordinates;
   DateTime? _tomorrowFajr;
   DateTime? _yesterdayIsha;
-  Timer? _timer;
   bool _started = false;
   int _day = -1;
 
@@ -55,7 +54,7 @@ class PrayerService extends ChangeNotifier {
     _started = true;
     await _locate();
     _recompute();
-    _timer = Timer.periodic(const Duration(seconds: 1), (_) => _tick());
+    Timer.periodic(const Duration(seconds: 1), (_) => _tick());
   }
 
   Future<String?> _placeName(double lat, double lng) async {

@@ -73,7 +73,7 @@ class _StartuppageState extends State<Startuppage> {
             children: [
               const Text(
                 'اِقـــرأ',
-                style: TextStyle(fontFamily: 'kufi', fontSize: 34),
+                style: TextStyle(fontFamily: 'Kufi', fontSize: 34),
               ),
               const SizedBox(height: 64),
               if (_error == null) ...[

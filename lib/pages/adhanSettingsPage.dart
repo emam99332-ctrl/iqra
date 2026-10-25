@@ -21,7 +21,7 @@ class AdhanSettingspage extends StatelessWidget {
         builder: (context, _) => ListView(
           children: [
             SwitchListTile(
-              activeColor: emerald,
+              activeThumbColor: emerald,
               title: const Text('تفعيل الأذان',
                   style: TextStyle(
                       fontFamily: 'ar',

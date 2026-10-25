@@ -16,7 +16,7 @@ class NextPrayerCard extends StatelessWidget {
         return Card(color: emerald,
           child: InkWell(
             onTap: onTap,
-            child: Container(decoration: BoxDecoration(gradient: LinearGradient(colors: [emerald.withOpacity(.7), gold.withOpacity(.7)]), borderRadius: BorderRadius.circular(10)),
+            child: Container(decoration: BoxDecoration(gradient: LinearGradient(colors: [emerald.withValues(alpha: .7), gold.withValues(alpha: .7)]), borderRadius: BorderRadius.circular(10)),
               padding: const EdgeInsets.all(20),
               child: next == null
                   ? const Center(child: CircularProgressIndicator(color: emerald,))

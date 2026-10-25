@@ -85,7 +85,7 @@ class AdhanService extends ChangeNotifier {
         sound: RawResourceAndroidNotificationSound(m.raw),
         audioAttributesUsage: AudioAttributesUsage.alarm,
         enableVibration: true,
-        autoCancel: true,
+        autoCancel: false,
         visibility: NotificationVisibility.public,
       ),
     );
