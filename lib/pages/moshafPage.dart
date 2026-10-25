@@ -203,7 +203,7 @@ class _MoshafPageState extends State<Moshafpage> {
                 backgroundColor: Colors.transparent,
                 builder: (context) {
                   return FractionallySizedBox(
-                    heightFactor: 0.35,
+                    heightFactor: 0.33,
                     child: Container(
                       decoration: const BoxDecoration(
                         color: cream,
@@ -359,8 +359,8 @@ class _SurahViewState extends State<SurahView> {
                           style: widget.audio.playingAyahNumber == a.number
                               ? TextStyle(
                             backgroundColor: (widget.audio.isRepeating
-                                ? Colors.amber
-                                : Colors.green)
+                                ? gold
+                                : emerald)
                                 .withValues(alpha: 0.25),
                           )
                               : null,

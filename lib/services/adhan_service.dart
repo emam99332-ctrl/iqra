@@ -8,7 +8,7 @@ import 'package:timezone/timezone.dart' as tz;
 class Muezzin {
   final String id;
   final String name;
-  final String raw; // اسم الملف في res/raw بدون الامتداد
+  final String raw;
   const Muezzin(this.id, this.name, this.raw);
 }
 
@@ -33,7 +33,6 @@ class AdhanService extends ChangeNotifier {
   int selected = 0;
   bool enabled = true;
 
-  /// يُضبط من main.dart لفتح شاشة الأذان عند الضغط على الإشعار
   void Function(String? payload)? onTap;
   bool launchedByAdhan = false;
   String? launchPayload;
@@ -52,7 +51,7 @@ class AdhanService extends ChangeNotifier {
 
     await _plugin.initialize(
       const InitializationSettings(
-        android: AndroidInitializationSettings('@mipmap/ic_notification'),
+        android: AndroidInitializationSettings('@mipmap/ic_launcher'),
       ),
       onDidReceiveNotificationResponse: (r) => onTap?.call(r.payload),
     );
@@ -75,14 +74,13 @@ class AdhanService extends ChangeNotifier {
     final m = current;
     return NotificationDetails(
       android: AndroidNotificationDetails(
-        'adhan_${m.id}', // قناة لكل شيخ (صوت القناة لا يتغير بعد إنشائها)
+        'adhan_${m.id}',
         'الأذان - ${m.name}',
         channelDescription: 'تنبيه الأذان',
         importance: Importance.max,
         priority: Priority.high,
         category: AndroidNotificationCategory.alarm,
         fullScreenIntent: true,
-        icon: 'ic_notification',
         playSound: true,
         sound: RawResourceAndroidNotificationSound(m.raw),
         audioAttributesUsage: AudioAttributesUsage.alarm,
@@ -108,13 +106,11 @@ class AdhanService extends ChangeNotifier {
     await schedule();
   }
 
-  /// يجدول أذان الأيام القادمة. يُستدعى كلما تغير الموقع أو اليوم أو الشيخ.
   Future<void> schedule([Coordinates? coordinates]) async {
     final c = coordinates ?? _last;
     if (c == null) return;
     _last = c;
 
-    // نلغي المجدولة فقط (لا نلغي أذانًا يعمل الآن)
     for (final p in await _plugin.pendingNotificationRequests()) {
       await _plugin.cancel(p.id);
     }
@@ -161,10 +157,10 @@ class AdhanService extends ChangeNotifier {
 
   Future<void> test() => _plugin.show(
     _testId,
-    'تجربة الأذان',
+    'حان موعد الصلاة الان',
     current.name,
     _details(),
-    payload: 'تجربة|$_testId',
+    payload: 'أذان|$_testId',
   );
 
   Future<void> stop(int id) => _plugin.cancel(id);

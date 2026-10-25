@@ -18,17 +18,25 @@ final navigatorKey = GlobalKey<NavigatorState>();
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await JustAudioBackground.init(
-    androidNotificationChannelId: 'com.iqra.audio',
-    androidNotificationChannelName: 'تلاوة القرآن الكريم',
-    androidNotificationOngoing: true,
-    androidNotificationIcon: 'drawable/ic_notification',
-  );
+  try {
+    await JustAudioBackground.init(
+      androidNotificationChannelId: 'com.iqra.audio',
+      androidNotificationChannelName: 'تلاوة القرآن الكريم',
+      androidNotificationOngoing: true,
+      androidNotificationIcon: 'drawable/ic_launcher',
+    );
+  } catch (e) {
+    debugPrint('JustAudioBackground init failed: $e');
+  }
 
-  await AdhanService.instance.init();
-  AdhanService.instance.onTap = (p) =>
-      navigatorKey.currentState?.pushNamed('/adhan', arguments: p);
-  AdhanService.instance.requestPermissions();
+  try {
+    await AdhanService.instance.init();
+    AdhanService.instance.onTap = (p) =>
+        navigatorKey.currentState?.pushNamed('/adhan', arguments: p);
+    AdhanService.instance.requestPermissions(); // بدون await
+  } catch (e) {
+    debugPrint('AdhanService init failed: $e');
+  }
 
   bool ready = false;
   try {
@@ -39,7 +47,8 @@ Future<void> main() async {
   final route = AdhanService.instance.launchedByAdhan
       ? '/adhan'
       : (ready ? '/home' : '/startup');
-  runApp(MyApp(initialRoute: route));}
+  runApp(MyApp(initialRoute: route));
+}
 
 class MyApp extends StatelessWidget {
   final String initialRoute;
