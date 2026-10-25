@@ -23,7 +23,7 @@ Future<void> main() async {
       androidNotificationChannelId: 'com.iqra.audio',
       androidNotificationChannelName: 'تلاوة القرآن الكريم',
       androidNotificationOngoing: true,
-      androidNotificationIcon: 'drawable/ic_launcher',
+      androidNotificationIcon: 'drawable/ic_stat_iqra',
     );
   } catch (e) {
     debugPrint('JustAudioBackground init failed: $e');

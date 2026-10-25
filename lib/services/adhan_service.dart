@@ -51,7 +51,7 @@ class AdhanService extends ChangeNotifier {
 
     await _plugin.initialize(
       const InitializationSettings(
-        android: AndroidInitializationSettings('@mipmap/ic_launcher'),
+        android: AndroidInitializationSettings('ic_stat_iqra'),
       ),
       onDidReceiveNotificationResponse: (r) => onTap?.call(r.payload),
     );
