@@ -63,8 +63,8 @@ class QuranAudio extends ChangeNotifier {
         if (session != _session) return false;
 
         final completed = _player.processingState == ProcessingState.completed;
-        await _player.pause();
         if (completed) return true;
+        await _player.pause();
       } on PlayerInterruptedException {
         if (session != _session) return false;
       } on PlayerException catch (e) {
@@ -121,6 +121,7 @@ class QuranAudio extends ChangeNotifier {
       }
     } finally {
       if (session == _session) _clear();
+      unawaited(_player.pause());
     }
   }
 

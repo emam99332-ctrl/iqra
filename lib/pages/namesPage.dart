@@ -16,6 +16,7 @@ class Namespage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(backgroundColor: cream,
       appBar: AppBar(
+        leading: Icon(Icons.arrow_back_ios),
         title: Text('أسماء الله الحسنى', style: titleStyle()),
         foregroundColor: emerald,
         backgroundColor: cream,

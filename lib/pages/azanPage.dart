@@ -24,6 +24,7 @@ class _AzanpageState extends State<Azanpage> {
   Widget build(BuildContext context) {
     return Scaffold(backgroundColor: cream,
       appBar: AppBar(
+        leading: Icon(Icons.arrow_back_ios),
         title: Text('مواقيت الصلاة', style: titleStyle()),
         centerTitle: true,
         foregroundColor: emerald,

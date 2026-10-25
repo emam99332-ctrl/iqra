@@ -18,6 +18,12 @@ class Radiopage extends StatelessWidget {
     );
   }
 
+  Future<void> _onSelect(BuildContext context, int i) async {
+    final error = await RadioService.instance.selectChannel(i);
+    if (error == null || !context.mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(error)));
+  }
+
   @override
   Widget build(BuildContext context) {
     final radio = RadioService.instance;
@@ -43,21 +49,7 @@ class Radiopage extends StatelessWidget {
             return Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(
-                  Icons.radio,
-                  size: 80,
-                  color: emerald,
-                ),
-                const SizedBox(height: 16),
-                const Text(
-                  'إذاعة القرآن الكريم من القاهرة',
-                  style: TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'ar',
-                  ),
-                  textAlign: TextAlign.center,
-                ),
+                _ChannelPager(onChanged: (i) => _onSelect(context, i)),
                 const SizedBox(height: 28),
 
                 RadioVisualizer(isPlaying: playing),
@@ -188,3 +180,78 @@ class _RadioVisualizerState extends State<RadioVisualizer>
 }
 
 const int thirtyBars = 30;
+
+class _ChannelPager extends StatefulWidget {
+  final void Function(int) onChanged;
+  const _ChannelPager({required this.onChanged});
+
+  @override
+  State<_ChannelPager> createState() => _ChannelPagerState();
+}
+
+class _ChannelPagerState extends State<_ChannelPager> {
+  final radio = RadioService.instance;
+  late final PageController _c = PageController(initialPage: radio.selected);
+
+  @override
+  void dispose() {
+    _c.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        SizedBox(
+          width: double.infinity,
+          height: 170,
+          child: PageView.builder(
+            controller: _c,
+            itemCount: RadioService.channels.length,
+            onPageChanged: widget.onChanged,
+            itemBuilder: (context, i) => Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Icon(Icons.radio, size: 80, color: emerald),
+                const SizedBox(height: 16),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                  child: Text(
+                    RadioService.channels[i].title,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'ar'),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        ListenableBuilder(
+          listenable: radio,
+          builder: (context, _) => Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              for (var i = 0; i < RadioService.channels.length; i++)
+                Container(
+                  width: i == radio.selected ? 18 : 8,
+                  height: 8,
+                  margin: const EdgeInsets.all(3),
+                  decoration: BoxDecoration(
+                    color: i == radio.selected ? emerald : gold,
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 6),
+        const Text('اسحب يميناً أو يساراً لتغيير المحطة',
+            style: TextStyle(fontFamily: 'ar', color: gold)),
+      ],
+    );
+  }
+}

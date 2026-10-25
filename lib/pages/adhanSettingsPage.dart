@@ -11,6 +11,7 @@ class AdhanSettingspage extends StatelessWidget {
     return Scaffold(
       backgroundColor: cream,
       appBar: AppBar(
+        leading: Icon(Icons.arrow_back_ios),
         title: Text('إعدادات الأذان', style: titleStyle()),
         centerTitle: true,
         foregroundColor: emerald,

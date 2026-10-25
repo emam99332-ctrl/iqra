@@ -5,6 +5,7 @@ import 'package:geolocator/geolocator.dart';
 import 'dart:ui' show Locale;
 import 'package:geocoding/geocoding.dart' show Geocoding;
 import 'package:iqra/services/adhan_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 String arabicDigits(String s) => s.replaceAllMapped(
   RegExp(r'\d'),
@@ -52,9 +53,9 @@ class PrayerService extends ChangeNotifier {
   Future<void> init() async {
     if (_started) return;
     _started = true;
+    if (await _loadSavedLocation()) _recompute();
     await _locate();
     _recompute();
-    Timer.periodic(const Duration(seconds: 1), (_) => _tick());
   }
 
   Future<String?> _placeName(double lat, double lng) async {
@@ -78,10 +79,14 @@ class PrayerService extends ChangeNotifier {
       return null;
     }
   }
+
   Future<void> _locate() async {
-    _coordinates = _defaultCoordinates;
-    placeName = 'القاهرة';
-    note = 'تعذر تحديد موقعك، الأوقات محسوبة للقاهرة';
+    final hadSaved = await _loadSavedLocation();
+    if (!hadSaved) {
+      _coordinates = _defaultCoordinates;
+      placeName = 'القاهرة';
+      note = 'تعذر تحديد موقعك، الأوقات محسوبة للقاهرة';
+    }
     try {
       if (await Geolocator.isLocationServiceEnabled()) {
         var permission = await Geolocator.checkPermission();
@@ -94,8 +99,10 @@ class PrayerService extends ChangeNotifier {
               .timeout(const Duration(seconds: 15));
           _coordinates = Coordinates(p.latitude, p.longitude);
           note = null;
-          placeName =
-              await _placeName(p.latitude, p.longitude) ?? 'موقعك الحالي';
+          // اسم المكان يحتاج إنترنت، فإن فشل نبقي الاسم المحفوظ
+          placeName = await _placeName(p.latitude, p.longitude) ??
+              (hadSaved ? placeName : 'موقعك الحالي');
+          await _saveLocation(p.latitude, p.longitude, placeName);
         }
       }
     } catch (_) {}
@@ -130,6 +137,24 @@ class PrayerService extends ChangeNotifier {
     now = current;
     AdhanService.instance.schedule(c);
     notifyListeners();
+  }
+
+  Future<void> _saveLocation(double lat, double lng, String place) async {
+    final p = await SharedPreferences.getInstance();
+    await p.setDouble('loc_lat', lat);
+    await p.setDouble('loc_lng', lng);
+    await p.setString('loc_place', place);
+  }
+
+  Future<bool> _loadSavedLocation() async {
+    final p = await SharedPreferences.getInstance();
+    final lat = p.getDouble('loc_lat');
+    final lng = p.getDouble('loc_lng');
+    if (lat == null || lng == null) return false;
+    _coordinates = Coordinates(lat, lng);
+    placeName = p.getString('loc_place') ?? 'آخر موقع محفوظ';
+    note = 'تعذر تحديث موقعك، الأوقات محسوبة لآخر موقع محفوظ';
+    return true;
   }
 
   void _tick() {

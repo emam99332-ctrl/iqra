@@ -152,7 +152,7 @@ class _AzkarDetailPageState extends State<AzkarDetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(backgroundColor: cream,
+    return Scaffold(backgroundColor: read,
       appBar: AppBar(
         title: Text(widget.title, style: TextStyle(fontFamily: 'ar', fontWeight: FontWeight.bold),),
         centerTitle: true,

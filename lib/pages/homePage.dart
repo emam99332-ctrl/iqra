@@ -8,6 +8,8 @@ import 'package:iqra/pages/surahPage.dart';
 import 'package:iqra/services/prayer_service.dart';
 import 'package:iqra/services/radio_service.dart';
 import 'package:iqra/styles/style.dart';
+import 'package:iqra/widgets/social_footer.dart';
+import 'package:iqra/pages/tafsirPage.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
@@ -25,25 +27,22 @@ class _HomepageState extends State<Homepage> {
         () => Radiopage(),
         () => Qiblapage(),
         () => Azkarpage(),
+        () => Tafsirpage(),
   ];
 
   static const _titles = [
     'آذان',
-    'أسماء الله\n   الحسنى',
+    'أسماء الله\n  الحسنى',
     'الراديو',
     'القبلة',
     'اذكار',
+    'التفسير',
   ];
 
   @override
   void initState() {
     super.initState();
     _prayer.init();
-  }
-
-  String _greeting() {
-    final hour = DateTime.now().hour;
-    return hour >= 4 && hour < 12 ? 'صباح الخير' : 'مساء الخير';
   }
 
   Future<void> _onRefresh() async {
@@ -116,7 +115,8 @@ class _HomepageState extends State<Homepage> {
                 builder: (context, _) => Align(
                   alignment: Alignment.centerRight,
                   child: Text(
-                    '${_greeting()}, أخى المسلم',
+                    textAlign: TextAlign.right,
+                    'السلام عليكم ورحمة الله وبركاته, أخى المسلم',
                     style: titleStyle(),
                   ),
                 ),
@@ -171,7 +171,7 @@ class _HomepageState extends State<Homepage> {
                         width,
                         gold,
                         'الصلاة السابقة',
-                        prev?.key ?? '—',
+                        prev?.key ?? '_',
                         prev == null ? '—' : formatTime(prev.value),
                         prev == null
                             ? ''
@@ -180,7 +180,7 @@ class _HomepageState extends State<Homepage> {
                       _prayerBox(
                         width,
                         emerald,
-                        'الصلاة الجاية',
+                        'الصلاة القادمة',
                         next?.key ?? '—',
                         next == null ? '—' : formatTime(next.value),
                         next == null
@@ -243,17 +243,16 @@ class _HomepageState extends State<Homepage> {
                 )
                     : const SizedBox.shrink(),
               ),
-              const SizedBox(height: 20),
               GridView.builder(
-                padding: const EdgeInsets.all(12),
+                padding: const EdgeInsets.symmetric(vertical: 6),
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                itemCount: 5,
+                itemCount: 6,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   mainAxisSpacing: 6,
                   crossAxisSpacing: 6,
-                  childAspectRatio: 3 / 2,
+                  childAspectRatio: 3 / 2.5,
                 ),
                 itemBuilder: (context, index) {
                   return Container(
@@ -272,13 +271,13 @@ class _HomepageState extends State<Homepage> {
                           ),
                         );
                       },
-                      child: Column(mainAxisAlignment: MainAxisAlignment.center,
+                      child: Column(mainAxisAlignment: MainAxisAlignment.spaceAround,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Image.asset(
                             'assets/buttons/$index.png',
-                            height: 30,
-                            width: 30,
+                            height: 45,
+                            width: 45,
                           ),
                           Text(
                             _titles[index],
@@ -294,6 +293,8 @@ class _HomepageState extends State<Homepage> {
                   );
                 },
               ),
+              const SizedBox(height: 20),
+              const SocialFooter(),
             ],
           ),
         ),

@@ -8,7 +8,7 @@ titGreenleStyle() {
 
 titleStyle() {
   return const TextStyle(
-      color:emerald, fontWeight: FontWeight.bold, fontSize: 24, fontFamily: 'ar'
+      color:emerald, fontWeight: FontWeight.bold, fontSize: 20, fontFamily: 'ar'
   );
 }
 
@@ -27,3 +27,4 @@ titlePrayer() {
 const emerald = Color(0xFF046B50);
 const gold    = Color(0xFFC5A56A);
 const cream   = Color(0xFFFAF6EC);
+const read   = Color(0xFFF3EAD3);

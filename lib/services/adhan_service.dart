@@ -33,10 +33,6 @@ class AdhanService extends ChangeNotifier {
   int selected = 0;
   bool enabled = true;
 
-  void Function(String? payload)? onTap;
-  bool launchedByAdhan = false;
-  String? launchPayload;
-
   Muezzin get current => muezzins[selected];
 
   AndroidFlutterLocalNotificationsPlugin? get _android =>
@@ -51,23 +47,15 @@ class AdhanService extends ChangeNotifier {
 
     await _plugin.initialize(
       const InitializationSettings(
-        android: AndroidInitializationSettings('ic_stat_iqra'),
+        android: AndroidInitializationSettings('@mipmap/ic_launcher'),
       ),
-      onDidReceiveNotificationResponse: (r) => onTap?.call(r.payload),
     );
-
-    final launch = await _plugin.getNotificationAppLaunchDetails();
-    if (launch?.didNotificationLaunchApp ?? false) {
-      launchedByAdhan = true;
-      launchPayload = launch!.notificationResponse?.payload;
-    }
   }
 
   Future<void> requestPermissions() async {
     final a = _android;
     await a?.requestNotificationsPermission();
     await a?.requestExactAlarmsPermission();
-    await a?.requestFullScreenIntentPermission();
   }
 
   NotificationDetails _details() {
@@ -80,12 +68,12 @@ class AdhanService extends ChangeNotifier {
         importance: Importance.max,
         priority: Priority.high,
         category: AndroidNotificationCategory.alarm,
-        fullScreenIntent: true,
+        fullScreenIntent: false,
         playSound: true,
         sound: RawResourceAndroidNotificationSound(m.raw),
         audioAttributesUsage: AudioAttributesUsage.alarm,
         enableVibration: true,
-        autoCancel: false,
+        autoCancel: true,
         visibility: NotificationVisibility.public,
       ),
     );
@@ -157,8 +145,5 @@ class AdhanService extends ChangeNotifier {
     'حان موعد الصلاة الان',
     current.name,
     _details(),
-    payload: 'أذان|$_testId',
   );
-
-  Future<void> stop(int id) => _plugin.cancel(id);
 }

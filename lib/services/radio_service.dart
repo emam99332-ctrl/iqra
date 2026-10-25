@@ -6,6 +6,7 @@ import 'package:audio_service/audio_service.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:just_audio/just_audio.dart';
+import '../models/radio_station.dart';
 
 class RadioService extends ChangeNotifier {
   RadioService._() {
@@ -13,6 +14,30 @@ class RadioService extends ChangeNotifier {
       _state = state;
       notifyListeners();
     });
+  }
+
+  static const channels = [
+    RadioChannel('إذاعة القرآن الكريم من القاهرة', null),
+    RadioChannel('تفسير القرآن الكريم', 'https://qurango.net/radio/tafseer'),
+    RadioChannel('المختصر في التفسير', 'https://qurango.net/radio/mukhtasartafsir'),
+    RadioChannel('المختصر في السيرة النبوية', 'https://qurango.net/radio/almukhtasar_fi_alsiyra'),
+    RadioChannel('في ظلال السيرة النبوية', 'https://qurango.net/radio/fi_zilal_alsiyra'),
+    RadioChannel('صور من حياة الصحابة', 'https://qurango.net/radio/sahabah'),
+  ];
+
+  int selected = 0;
+  RadioChannel get channel => channels[selected];
+
+  Future<String?> selectChannel(int i) async {
+    if (i == selected) return null;
+    final wasPlaying = isPlaying;
+    selected = i;
+    notifyListeners();
+    if (wasPlaying) {
+      await _player.stop();
+      return toggle();
+    }
+    return null;
   }
 
   static final RadioService instance = RadioService._();
@@ -98,7 +123,9 @@ class RadioService extends ChangeNotifier {
     notifyListeners();
 
     try {
-      final urls = _urls ??= await _candidates();
+      final urls = channel.url == null
+          ? (_urls ??= await _candidates())
+          : [channel.url!];
       final art = await assetToUri('assets/r.jpg');
       for (final url in urls) {
         try {
@@ -108,8 +135,8 @@ class RadioService extends ChangeNotifier {
               tag: MediaItem(
                 id: url,
                 album: 'تطبيق اقرأ',
-                title: 'إذاعة القرآن الكريم من القاهرة',
-                artist: 'إذاعة القرآن الكريم',
+                title: channel.title,
+                artist: 'اقرأ',
                 artUri: art,
               ),
             ),

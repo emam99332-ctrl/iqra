@@ -10,7 +10,6 @@ import 'package:iqra/pages/radioPage.dart';
 import 'package:iqra/pages/startupPage.dart';
 import 'package:iqra/pages/surahPage.dart';
 import 'package:iqra/services/apiService.dart';
-import 'package:iqra/pages/adhanAlertPage.dart';
 import 'package:iqra/services/adhan_service.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
@@ -31,8 +30,6 @@ Future<void> main() async {
 
   try {
     await AdhanService.instance.init();
-    AdhanService.instance.onTap = (p) =>
-        navigatorKey.currentState?.pushNamed('/adhan', arguments: p);
     AdhanService.instance.requestPermissions(); // بدون await
   } catch (e) {
     debugPrint('AdhanService init failed: $e');
@@ -44,9 +41,8 @@ Future<void> main() async {
         await ApiService.isAzkarDownloaded();
   } catch (_) {}
 
-  final route = AdhanService.instance.launchedByAdhan
-      ? '/adhan'
-      : (ready ? '/home' : '/startup');
+  final route = ready ? '/home' : '/startup';
+
   runApp(MyApp(initialRoute: route));
 }
 
@@ -69,7 +65,6 @@ class MyApp extends StatelessWidget {
         '/radio': (context) => Radiopage(),
         '/names': (context) => Namespage(),
         '/azkar': (context) => Azkarpage(),
-        '/adhan': (context) => AdhanAlertpage(),
       },
     );
   }

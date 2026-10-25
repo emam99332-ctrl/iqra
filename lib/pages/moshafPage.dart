@@ -8,6 +8,8 @@ import 'package:iqra/services/reciter_settings.dart';
 import 'package:iqra/styles/style.dart';
 import 'package:iqra/services/reciter_downloads.dart';
 
+import '../services/tafsir_service.dart';
+
 String toArabicDigits(int n) => n
     .toString()
     .split('')
@@ -209,8 +211,11 @@ class _MoshafPageState extends State<Moshafpage> {
 
   Future<void> _onAyahTap(Ayah ayah) async {
     int times = 3;
+    final tafsirFuture = TafsirService.ayah(
+        TafsirService.current.id, ayah.surahNumber, ayah.numberInSurah);
     await showModalBottomSheet(
       context: context,
+      isScrollControlled: true,
       backgroundColor: cream,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
@@ -220,116 +225,143 @@ class _MoshafPageState extends State<Moshafpage> {
           textDirection: TextDirection.rtl,
           child: Padding(
             padding: const EdgeInsets.all(20),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Text(
-                  'آية ${toArabicDigits(ayah.numberInSurah)} - ${ayah.surahName}',
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                      fontFamily: 'ar',
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: emerald),
-                ),
-                const SizedBox(height: 16),
-                const Text('عدد مرات التكرار',
-                    style: TextStyle(
-                        fontFamily: 'ar',
-                        fontWeight: FontWeight.bold,
-                        color: gold)),
-                const SizedBox(height: 8),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    IconButton.filled(
-                      style: IconButton.styleFrom(
-                          backgroundColor: emerald, foregroundColor: cream),
-                      icon: const Icon(Icons.remove),
-                      onPressed: times > 1
-                          ? () => setSheet(() => times--)
-                          : null,
-                    ),
-                    SizedBox(
-                      width: 70,
-                      child: Text(
-                        toArabicDigits(times),
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                            fontFamily: 'ar',
-                            fontSize: 28,
-                            fontWeight: FontWeight.bold,
-                            color: emerald),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  FutureBuilder<String>(
+                    future: tafsirFuture,
+                    builder: (context, snap) => Container(
+                      constraints: const BoxConstraints(maxHeight: 150),
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        color: gold.withValues(alpha: 0.25),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: SingleChildScrollView(
+                        child: Text(
+                          snap.connectionState == ConnectionState.waiting
+                              ? 'جارٍ تحميل التفسير...'
+                              : snap.hasError
+                              ? 'تعذر تحميل التفسير (تحتاج إنترنت أول مرة)'
+                              : '${TafsirService.current.name}:\n${snap.data}',
+                          textDirection: TextDirection.rtl,
+                          textAlign: TextAlign.justify,
+                          style: const TextStyle(
+                              fontFamily: 'ar', fontSize: 15, color: emerald),
+                        ),
                       ),
                     ),
-                    IconButton.filled(
-                      style: IconButton.styleFrom(
-                          backgroundColor: emerald, foregroundColor: cream),
-                      icon: const Icon(Icons.add),
-                      onPressed: times < 99
-                          ? () => setSheet(() => times++)
-                          : null,
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 12),
-                FilledButton.icon(
-                  style: FilledButton.styleFrom(backgroundColor: emerald),
-                  icon: const Icon(Icons.repeat, color: cream),
-                  label: Text('تكرار الآية ${toArabicDigits(times)} مرات',
-                      style: const TextStyle(
-                          fontFamily: 'ar', color: cream)),
-                  onPressed: () async {
-                    Navigator.pop(ctx);
-                    try {
-                      await _audio.repeatAyah(ayah, times: times);
-                    } catch (e) {
-                      if (!mounted) return;
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('تعذر تشغيل الصوت: $e')),
-                      );
-                    }
-                  },
-                ),
-                const SizedBox(height: 8),
-                FilledButton.icon(
-                  style: FilledButton.styleFrom(backgroundColor: gold),
-                  icon: const Icon(Icons.play_arrow, color: emerald),
-                  label: const Text('ابدأ القراءة من هنا',
+                  ),
+                  const SizedBox(height: 12),
+                  Text(
+                    'آية ${toArabicDigits(ayah.numberInSurah)} - ${ayah.surahName}',
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                        fontFamily: 'ar',
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: emerald),
+                  ),
+                  const SizedBox(height: 16),
+                  const Text('عدد مرات التكرار',
                       style: TextStyle(
                           fontFamily: 'ar',
                           fontWeight: FontWeight.bold,
-                          color: emerald)),
-                  onPressed: () async {
-                    Navigator.pop(ctx);
-                    try {
-                      await _audio.playFromSurah(
-                        ayah.surahNumber,
-                        startAyah: ayah.numberInSurah,
-                        stopAtSurahEnd: true,
-                      );
-                    } catch (e) {
-                      if (!mounted) return;
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('تعذر تشغيل الصوت: $e')),
-                      );
-                    }
-                  },
-                ),
-                if (_audio.isPlaying) ...[
+                          color: gold)),
                   const SizedBox(height: 8),
-                  TextButton.icon(
-                    icon: const Icon(Icons.stop, color: emerald),
-                    label: const Text('إيقاف التشغيل',
-                        style: TextStyle(fontFamily: 'ar', color: emerald)),
-                    onPressed: () {
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      IconButton.filled(
+                        style: IconButton.styleFrom(
+                            backgroundColor: emerald, foregroundColor: cream),
+                        icon: const Icon(Icons.remove),
+                        onPressed: times > 1
+                            ? () => setSheet(() => times--)
+                            : null,
+                      ),
+                      SizedBox(
+                        width: 70,
+                        child: Text(
+                          toArabicDigits(times),
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                              fontFamily: 'ar',
+                              fontSize: 28,
+                              fontWeight: FontWeight.bold,
+                              color: emerald),
+                        ),
+                      ),
+                      IconButton.filled(
+                        style: IconButton.styleFrom(
+                            backgroundColor: emerald, foregroundColor: cream),
+                        icon: const Icon(Icons.add),
+                        onPressed: times < 99
+                            ? () => setSheet(() => times++)
+                            : null,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+                  FilledButton.icon(
+                    style: FilledButton.styleFrom(backgroundColor: emerald),
+                    icon: const Icon(Icons.repeat, color: cream),
+                    label: Text('تكرار الآية ${toArabicDigits(times)} مرات',
+                        style: const TextStyle(
+                            fontFamily: 'ar', color: cream)),
+                    onPressed: () async {
                       Navigator.pop(ctx);
-                      _audio.stop();
+                      try {
+                        await _audio.repeatAyah(ayah, times: times);
+                      } catch (e) {
+                        if (!mounted) return;
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('تعذر تشغيل الصوت: $e')),
+                        );
+                      }
                     },
                   ),
+                  const SizedBox(height: 8),
+                  FilledButton.icon(
+                    style: FilledButton.styleFrom(backgroundColor: gold),
+                    icon: const Icon(Icons.play_arrow, color: emerald),
+                    label: const Text('ابدأ القراءة من هنا',
+                        style: TextStyle(
+                            fontFamily: 'ar',
+                            fontWeight: FontWeight.bold,
+                            color: emerald)),
+                    onPressed: () async {
+                      Navigator.pop(ctx);
+                      try {
+                        await _audio.playFromSurah(
+                          ayah.surahNumber,
+                          startAyah: ayah.numberInSurah,
+                          stopAtSurahEnd: true,
+                        );
+                      } catch (e) {
+                        if (!mounted) return;
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('تعذر تشغيل الصوت: $e')),
+                        );
+                      }
+                    },
+                  ),
+                  if (_audio.isPlaying) ...[
+                    const SizedBox(height: 8),
+                    TextButton.icon(
+                      icon: const Icon(Icons.stop, color: emerald),
+                      label: const Text('إيقاف التشغيل',
+                          style: TextStyle(fontFamily: 'ar', color: emerald)),
+                      onPressed: () {
+                        Navigator.pop(ctx);
+                        _audio.stop();
+                      },
+                    ),
+                  ],
                 ],
-              ],
+              ),
             ),
           ),
         ),
@@ -339,7 +371,7 @@ class _MoshafPageState extends State<Moshafpage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(backgroundColor: cream,
+    return Scaffold(backgroundColor: read,
       appBar: AppBar(
         backgroundColor: cream,
         foregroundColor: emerald,
@@ -381,6 +413,7 @@ class _MoshafPageState extends State<Moshafpage> {
                                       final downloads = ReciterDownloads.instance;
                                       return GridView.builder(
                                         padding: const EdgeInsets.all(12),
+                                        reverse: true,
                                         scrollDirection: Axis.horizontal,
                                         itemCount: ReciterSettings.reciters.length,
                                         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

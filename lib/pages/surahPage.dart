@@ -55,8 +55,9 @@ class _SurahState extends State<Surahpage>{
   Widget build(BuildContext context) {
     return Scaffold(backgroundColor: cream,
       appBar: AppBar(
+        leading: Icon(Icons.arrow_back_ios),
         title: Text('القران الكريم',style: titleStyle()),
-        iconTheme: IconThemeData(color: emerald),
+        foregroundColor: emerald,
         centerTitle: true,
         elevation: 0.0,
         backgroundColor: cream,

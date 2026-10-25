@@ -64,6 +64,7 @@ class _QiblapageState extends State<Qiblapage> {
   Widget build(BuildContext context) {
     return Scaffold(backgroundColor: emerald,
       appBar: AppBar(
+        leading: Icon(Icons.arrow_back_ios),
         foregroundColor: emerald,
         backgroundColor: cream,
         title: Text(
