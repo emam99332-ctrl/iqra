@@ -8,7 +8,7 @@ titGreenleStyle() {
 
 titleStyle() {
   return const TextStyle(
-      color:emerald, fontWeight: FontWeight.bold, fontSize: 20, fontFamily: 'ar'
+      color:emerald, fontWeight: FontWeight.bold, fontSize: 26, fontFamily: 'Kufi'
   );
 }
 

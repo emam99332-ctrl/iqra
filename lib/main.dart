@@ -30,7 +30,7 @@ Future<void> main() async {
 
   try {
     await AdhanService.instance.init();
-    AdhanService.instance.requestPermissions(); // بدون await
+    AdhanService.instance.requestPermissions();
   } catch (e) {
     debugPrint('AdhanService init failed: $e');
   }

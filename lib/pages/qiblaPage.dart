@@ -48,7 +48,6 @@ class _QiblapageState extends State<Qiblapage> {
       ),
     );
 
-    // إحداثيات الكعبة المشرفة
     const kaabaLatitude = 21.4225;
     const kaabaLongitude = 39.8262;
 
@@ -64,7 +63,11 @@ class _QiblapageState extends State<Qiblapage> {
   Widget build(BuildContext context) {
     return Scaffold(backgroundColor: emerald,
       appBar: AppBar(
-        leading: Icon(Icons.arrow_back_ios),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios_new, size: 20),  
+          onPressed: () => Navigator.maybePop(context),
+        ),
+        elevation: 0,
         foregroundColor: emerald,
         backgroundColor: cream,
         title: Text(
@@ -139,7 +142,6 @@ class _QiblapageState extends State<Qiblapage> {
                     );
                   }
 
-                  // الزاوية بين اتجاه الهاتف واتجاه القبلة
                   final direction = qiblaBearing - heading;
 
                   return Center(

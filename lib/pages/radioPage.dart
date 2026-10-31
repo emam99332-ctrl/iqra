@@ -35,6 +35,11 @@ class Radiopage extends StatelessWidget {
           'إذاعة القرآن الكريم',
           style: titleStyle(),
         ),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios_new, size: 20),  
+          onPressed: () => Navigator.maybePop(context),
+        ),
+        elevation: 0,
         foregroundColor: emerald,
         backgroundColor: cream,
         centerTitle: true,
@@ -221,7 +226,6 @@ class _ChannelPagerState extends State<_ChannelPager> {
                     height: 180,
                     width: 180,)
                 ),
-                // const Icon(Icons.radio, size: 80, color: emerald),
                 const SizedBox(height: 16),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 24),

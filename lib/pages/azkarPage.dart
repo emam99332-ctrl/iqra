@@ -49,10 +49,15 @@ class _AzkarpageState extends State<Azkarpage> {
   Widget build(BuildContext context) {
     return Scaffold(backgroundColor: cream,
       appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios_new, size: 20),  
+          onPressed: () => Navigator.maybePop(context),
+        ),
         title: Text('الأذكار', style: titleStyle()),
         centerTitle: true,
         foregroundColor: emerald,
         backgroundColor: cream,
+        elevation: 0,  
       ),
       body: FutureBuilder<List<AzkarCategory>>(
         future: _future,
@@ -156,8 +161,13 @@ class _AzkarDetailPageState extends State<AzkarDetailPage> {
       appBar: AppBar(
         title: Text(widget.title, style: TextStyle(fontFamily: 'ar', fontWeight: FontWeight.bold),),
         centerTitle: true,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios_new, size: 20),  
+          onPressed: () => Navigator.maybePop(context),
+        ),
+        elevation: 0,
         foregroundColor: emerald,
-        backgroundColor: cream,
+        backgroundColor: read,
       ),
       body: FutureBuilder<List<Zikr>>(
         future: _future,

@@ -373,7 +373,11 @@ class _MoshafPageState extends State<Moshafpage> {
   Widget build(BuildContext context) {
     return Scaffold(backgroundColor: read,
       appBar: AppBar(
-        leading: Icon(Icons.arrow_back_ios),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios_new, size: 20),  
+          onPressed: () => Navigator.maybePop(context),
+        ),
+        elevation: 0,
         backgroundColor: read,
         foregroundColor: emerald,
         centerTitle: true,

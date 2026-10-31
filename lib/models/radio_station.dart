@@ -1,6 +1,6 @@
 class RadioChannel {
   final String title;
-  final String? url; // null = إذاعة القاهرة (تُحدَّد عبر radio-browser)
+  final String? url;
   const RadioChannel(this.title, this.url);
 }
 

@@ -20,7 +20,12 @@ class AdhanService extends ChangeNotifier {
     Muezzin('makkah', 'أذان مكة', 'adhan_makkah'),
     Muezzin('madinah', 'أذان المدينة', 'adhan_madinah'),
     Muezzin('alaqsa', 'أذان المسجد الأقصى', 'adhan_alaqsa'),
-    Muezzin('mishary', 'مشاري العفاسي', 'adhan_mishary'),
+    Muezzin('fajr', 'الشيخ عبدالباسط عبدالصمد - الفجر', 'adhan_fajr'),
+    Muezzin('mishary', 'الشيخ مشاري العفاسي', 'adhan_mishary'),
+    Muezzin('hosari', 'الشيخ محمود الحصرى', 'adhan_hosari'),
+    Muezzin('refaat', 'الشيخ محمد رفعت', 'adhan_refaat'),
+    Muezzin('said', 'الشيخ سيد النقشبندى', 'adhan_said'),
+    Muezzin('zahbi', 'الشيخ عبدالله الذهبى', 'adhan_zahbi'),
   ];
 
   static const _daysAhead = 20;
@@ -35,6 +40,33 @@ class AdhanService extends ChangeNotifier {
 
   Muezzin get current => muezzins[selected];
 
+  static const prayerNames = ['الفجر', 'الظهر', 'العصر', 'المغرب', 'العشاء'];
+  static int prayerIndex(String name) => prayerNames.indexOf(name);
+
+  // صوت خاص بكل صلاة (null = يتبع الإعداد العام)
+  final List<int?> _overrides = List.filled(5, null);
+  int? overrideOf(int prayer) => _overrides[prayer];
+  Muezzin muezzinFor(int prayer) => muezzins[_overrides[prayer] ?? selected];
+
+  Future<void> setPrayerMuezzin(int prayer, int? index) async {
+    _overrides[prayer] = index;
+    if (index == null) {
+      await _prefs?.remove('muezzin_p$prayer');
+    } else {
+      await _prefs?.setInt('muezzin_p$prayer', index);
+    }
+    notifyListeners();
+    await schedule();
+  }
+
+  Future<void> preview(Muezzin m) => _plugin.show(
+    _testId,
+    'تجربة الأذان',
+    m.name,
+    _details(m),
+    payload: 'أذان|$_testId',
+  );
+
   AndroidFlutterLocalNotificationsPlugin? get _android =>
       _plugin.resolvePlatformSpecificImplementation<
           AndroidFlutterLocalNotificationsPlugin>();
@@ -44,6 +76,11 @@ class AdhanService extends ChangeNotifier {
     _prefs = await SharedPreferences.getInstance();
     selected = (_prefs!.getInt('muezzin') ?? 0).clamp(0, muezzins.length - 1);
     enabled = _prefs!.getBool('adhan_enabled') ?? true;
+
+    for (var i = 0; i < 5; i++) {
+      final v = _prefs!.getInt('muezzin_p$i');
+      _overrides[i] = (v != null && v >= 0 && v < muezzins.length) ? v : null;
+    }
 
     await _plugin.initialize(
       const InitializationSettings(
@@ -58,8 +95,8 @@ class AdhanService extends ChangeNotifier {
     await a?.requestExactAlarmsPermission();
   }
 
-  NotificationDetails _details() {
-    final m = current;
+  NotificationDetails _details([Muezzin? muezzin]) {
+    final m = muezzin ?? current;
     return NotificationDetails(
       android: AndroidNotificationDetails(
         'adhan_${m.id}',
@@ -108,7 +145,9 @@ class AdhanService extends ChangeNotifier {
 
     final params = CalculationMethod.egyptian.getParameters();
     final now = DateTime.now();
-    final details = _details();
+    final detailsCache = <String, NotificationDetails>{};
+    NotificationDetails detailsFor(Muezzin m) =>
+        detailsCache.putIfAbsent(m.id, () => _details(m));
 
     for (var d = 0; d <= _daysAhead; d++) {
       final date = now.add(Duration(days: d));
@@ -132,7 +171,7 @@ class AdhanService extends ChangeNotifier {
           'حان الآن موعد أذان $name',
           'حيّ على الصلاة',
           tz.TZDateTime.from(time, tz.UTC),
-          details,
+          detailsFor(muezzinFor(i)),
           androidScheduleMode: mode,
           payload: '$name|$id',
         );

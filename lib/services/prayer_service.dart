@@ -99,7 +99,7 @@ class PrayerService extends ChangeNotifier {
               .timeout(const Duration(seconds: 15));
           _coordinates = Coordinates(p.latitude, p.longitude);
           note = null;
-          // اسم المكان يحتاج إنترنت، فإن فشل نبقي الاسم المحفوظ
+          
           placeName = await _placeName(p.latitude, p.longitude) ??
               (hadSaved ? placeName : 'موقعك الحالي');
           await _saveLocation(p.latitude, p.longitude, placeName);

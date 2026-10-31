@@ -21,7 +21,11 @@ class _TafsirpageState extends State<Tafsirpage> {
     return Scaffold(
       backgroundColor: cream,
       appBar: AppBar(
-        leading: Icon(Icons.arrow_back_ios),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios_new, size: 20),  
+          onPressed: () => Navigator.maybePop(context),
+        ),
+        elevation: 0,
         title: Text('التفسير', style: titleStyle()),
         centerTitle: true,
         foregroundColor: emerald,

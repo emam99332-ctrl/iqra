@@ -93,10 +93,8 @@ class QuranAudio extends ChangeNotifier {
           ApiService.getSurahAyahs(surah + 1).then((_) {}, onError: (_) {});
         }
 
-        // أول سورة تبدأ من الآية المختارة، وما بعدها من أولها
         final fromAyah = surah == startSurah ? startAyah : 1;
 
-        // البسملة فقط عند بداية السورة (عدا الفاتحة والتوبة)
         if (fromAyah == 1 && surah != 1 && surah != 9) {
           playingAyahNumber = null;
           notifyListeners();
