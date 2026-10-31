@@ -1,6 +1,5 @@
-
 import 'dart:math' as math;
-
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:iqra/services/radio_service.dart';
 import 'package:iqra/styles/style.dart';
@@ -28,72 +27,97 @@ class Radiopage extends StatelessWidget {
   Widget build(BuildContext context) {
     final radio = RadioService.instance;
 
-    return Scaffold(
-      backgroundColor: cream,
-      appBar: AppBar(
-        title: Text(
-          'إذاعة القرآن الكريم',
-          style: titleStyle(),
-        ),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, size: 20),  
-          onPressed: () => Navigator.maybePop(context),
-        ),
-        elevation: 0,
-        foregroundColor: emerald,
-        backgroundColor: cream,
-        centerTitle: true,
-      ),
-      body: Center(
-        child: ListenableBuilder(
-          listenable: radio,
-          builder: (context, _) {
-            final loading = radio.isLoading;
-            final playing = radio.isPlaying;
+    return ListenableBuilder(
+      listenable: radio,
+      builder: (context, _) {
+        final selectedChannelIndex = radio.selected;
+        final loading = radio.isLoading;
+        final playing = radio.isPlaying;
 
-            return Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                _ChannelPager(onChanged: (i) => _onSelect(context, i)),
-                const SizedBox(height: 28),
-
-                RadioVisualizer(isPlaying: playing),
-
-                const SizedBox(height: 28),
-
-                Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    if (loading)
-                      SizedBox(
-                        width: 96,
-                        height: 96,
-                        child: CircularProgressIndicator(
-                          color: emerald,
+        return Scaffold(
+          backgroundColor: cream,
+          extendBodyBehindAppBar: true,
+          appBar: AppBar(
+            title: Text(
+              'إذاعة القرآن الكريم',
+              style: titleStyle(),
+            ),
+            leading: IconButton(
+              icon: const Icon(Icons.arrow_back_ios_new, size: 20),
+              onPressed: () => Navigator.maybePop(context),
+            ),
+            elevation: 0,
+            foregroundColor: emerald,
+            backgroundColor: Colors.transparent,
+            centerTitle: true,
+          ),
+          body: Stack(
+            children: [
+              AnimatedSwitcher(
+                duration: const Duration(milliseconds: 500),
+                child: ImageFiltered(
+                  key: ValueKey<int>(selectedChannelIndex),
+                  imageFilter: ImageFilter.blur(sigmaX: 1, sigmaY: 1), // درجة الضبابية
+                  child: Container(
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage('assets/radio/$selectedChannelIndex.jpg'),
+                        fit: BoxFit.cover,
+                        colorFilter: ColorFilter.mode(
+                          cream.withValues(alpha: 0.75), // طبقة لتقليل حدة ألوان الصورة
+                          BlendMode.srcOver,
                         ),
                       ),
-                    IconButton.filled(
-                      iconSize: 48,
-                      style: IconButton.styleFrom(
-                        backgroundColor: emerald,
-                        foregroundColor: cream,
-                      ),
-                      icon: Icon(
-                        playing || loading
-                            ? Icons.stop
-                            : Icons.play_arrow,
-                      ),
-                      onPressed: radio.isStarting
-                          ? null
-                          : () => _onToggle(context),
                     ),
-                  ],
+                  ),
                 ),
-              ],
-            );
-          },
-        ),
-      ),
+              ),
+              SafeArea(
+                child: Center(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      _ChannelPager(onChanged: (i) => _onSelect(context, i)),
+                      const SizedBox(height: 28),
+
+                      RadioVisualizer(isPlaying: playing),
+
+                      const SizedBox(height: 28),
+
+                      Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          if (loading)
+                            SizedBox(
+                              width: 96,
+                              height: 96,
+                              child: CircularProgressIndicator(
+                                color: emerald,
+                              ),
+                            ),
+                          IconButton.filled(
+                            iconSize: 48,
+                            style: IconButton.styleFrom(
+                              backgroundColor: emerald,
+                              foregroundColor: cream,
+                            ),
+                            icon: Icon(
+                              playing || loading ? Icons.stop : Icons.play_arrow,
+                            ),
+                            onPressed: radio.isStarting
+                                ? null
+                                : () => _onToggle(context),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }
