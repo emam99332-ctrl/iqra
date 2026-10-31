@@ -21,7 +21,6 @@ class RadioService extends ChangeNotifier {
     RadioChannel('تفسير القرآن الكريم', 'https://qurango.net/radio/tafseer'),
     RadioChannel('المختصر في التفسير', 'https://qurango.net/radio/mukhtasartafsir'),
     RadioChannel('المختصر في السيرة النبوية', 'https://qurango.net/radio/almukhtasar_fi_alsiyra'),
-    RadioChannel('في ظلال السيرة النبوية', 'https://qurango.net/radio/fi_zilal_alsiyra'),
     RadioChannel('صور من حياة الصحابة', 'https://qurango.net/radio/sahabah'),
   ];
 

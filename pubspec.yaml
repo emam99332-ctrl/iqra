@@ -39,6 +39,7 @@ flutter:
   assets:
     - assets/
     - assets/buttons/
+    - assets/radio/
     - assets/data/
     - assets/reciters/
     - assets/icons/

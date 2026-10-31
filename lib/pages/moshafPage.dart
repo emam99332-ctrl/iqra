@@ -373,7 +373,8 @@ class _MoshafPageState extends State<Moshafpage> {
   Widget build(BuildContext context) {
     return Scaffold(backgroundColor: read,
       appBar: AppBar(
-        backgroundColor: cream,
+        leading: Icon(Icons.arrow_back_ios),
+        backgroundColor: read,
         foregroundColor: emerald,
         centerTitle: true,
         title: Text(_title, style: titleStyle()),

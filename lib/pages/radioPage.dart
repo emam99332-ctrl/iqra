@@ -205,7 +205,7 @@ class _ChannelPagerState extends State<_ChannelPager> {
       children: [
         SizedBox(
           width: double.infinity,
-          height: 170,
+          height: 230,
           child: PageView.builder(
             controller: _c,
             itemCount: RadioService.channels.length,
@@ -213,7 +213,15 @@ class _ChannelPagerState extends State<_ChannelPager> {
             itemBuilder: (context, i) => Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Icon(Icons.radio, size: 80, color: emerald),
+                ClipRRect(
+                    borderRadius: BorderRadius.circular(15),
+                    child: Image.asset(
+                    'assets/radio/$i.jpg',
+                    fit: BoxFit.fill,
+                    height: 180,
+                    width: 180,)
+                ),
+                // const Icon(Icons.radio, size: 80, color: emerald),
                 const SizedBox(height: 16),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -248,9 +256,6 @@ class _ChannelPagerState extends State<_ChannelPager> {
             ],
           ),
         ),
-        const SizedBox(height: 6),
-        const Text('اسحب يميناً أو يساراً لتغيير المحطة',
-            style: TextStyle(fontFamily: 'ar', color: gold)),
       ],
     );
   }

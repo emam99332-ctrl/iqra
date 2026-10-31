@@ -230,11 +230,18 @@ class _HomepageState extends State<Homepage> {
               const SizedBox(height: 20),
               ListenableBuilder(
                 listenable: RadioService.instance,
-                builder: (context, _) => RadioService.instance.isPlaying
+                builder: (context, i) => RadioService.instance.isPlaying
                     ? Card(
                   child: ListTile(tileColor: gold,
                     leading: const Icon(Icons.radio, color: emerald),
-                    title: const Text('الإذاعة تعمل', textAlign: TextAlign.right,style: TextStyle(color: emerald, fontFamily: 'ar', fontWeight: FontWeight.bold),),
+                    title: Text(
+                      RadioService.instance.channel.title,
+                      textAlign: TextAlign.right,
+                      style: TextStyle(
+                          color: emerald,
+                          fontFamily: 'ar',
+                          fontWeight: FontWeight.bold)
+                    ),
                     trailing: IconButton(
                       icon: const Icon(Icons.stop, color: emerald,),
                       onPressed: RadioService.instance.stop,
