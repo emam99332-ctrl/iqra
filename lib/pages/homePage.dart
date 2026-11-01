@@ -10,6 +10,8 @@ import 'package:iqra/services/radio_service.dart';
 import 'package:iqra/styles/style.dart';
 import 'package:iqra/widgets/social_footer.dart';
 import 'package:iqra/pages/tafsirPage.dart';
+import 'package:iqra/pages/recitersPage.dart';
+import 'package:iqra/widgets/hijri_card.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
@@ -62,30 +64,71 @@ class _HomepageState extends State<Homepage> {
       String info,
       ) {
     return Container(
+      height: width * .43,
       width: width * .43,
-      margin: const EdgeInsets.all(5),
-      padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
       decoration: BoxDecoration(
-        color: color,
-        borderRadius: BorderRadius.circular(15),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Text('$label ', style: TextStyle(color: cream,fontWeight: FontWeight.bold, fontSize: 18, fontFamily: 'ar'),),
-              const Icon(Icons.watch_later, color: cream,),
-            ],
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey,
+            spreadRadius: 3,
+            blurRadius: 7,
+            offset: Offset(1, 2),
           ),
-          const SizedBox(height: 4),
-          Text(name, style: const TextStyle(fontSize: 25, color: cream, fontFamily: 'ar', fontWeight: FontWeight.bold)),
-          const SizedBox(height: 3),
-          Text(time, style: const TextStyle(fontSize: 25, fontFamily: 'ar', color: cream, fontWeight: FontWeight.bold)),
-          const SizedBox(height: 4),
-          Text(info, style: TextStyle(color: cream, fontFamily: 'ar'),),
         ],
+        image: DecorationImage(
+          image: AssetImage('assets/dashboard.png'),
+          fit: BoxFit.fill,
+        ),
+        borderRadius: BorderRadius.circular(25),
+      ),
+      child: Container(
+        padding: EdgeInsets.all(8),
+        decoration: BoxDecoration(
+          // gradient: LinearGradient(
+          //   colors: [
+          //     read.withOpacity(.7),
+          //     color.withOpacity(.7),
+          //   ],
+          // ),
+          color: color.withValues(alpha: .7),
+          borderRadius: BorderRadius.circular(25),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Flexible(
+                  child: Text(
+                    '$label ',
+                    textAlign: TextAlign.end,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                    style: TextStyle(
+                      color: cream,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                      fontFamily: 'ar',
+                    ),
+                  ),
+                ),
+                const Icon(
+                  Icons.watch_later,
+                  color: cream,
+                  size: 20,
+                ),
+              ],
+            ),
+            const SizedBox(height: 4),
+            Text(name, style: const TextStyle(fontSize: 25, color: cream, fontFamily: 'ar', fontWeight: FontWeight.bold)),
+            const SizedBox(height: 3),
+            Text(time, style: const TextStyle(fontSize: 25, fontFamily: 'ar', color: cream, fontWeight: FontWeight.bold)),
+            const SizedBox(height: 4),
+            Text(info, style: TextStyle(color: cream, fontFamily: 'ar'),),
+          ],
+        ),
+
       ),
     );
   }
@@ -93,7 +136,9 @@ class _HomepageState extends State<Homepage> {
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
-    return Scaffold(backgroundColor: cream,
+    return Scaffold(
+      bottomNavigationBar: const SurahMiniPlayer(),
+      backgroundColor: cream,
       appBar: null,
       body: SingleChildScrollView(
         child: Padding(
@@ -160,6 +205,8 @@ class _HomepageState extends State<Homepage> {
                 ],
               ),
               const SizedBox(height: 20),
+              HijriCard(height: width * 2.5, width: width),
+              const SizedBox(height: 20),
               ListenableBuilder(
                 listenable: _prayer,
                 builder: (context, _) {
@@ -177,6 +224,7 @@ class _HomepageState extends State<Homepage> {
                             ? ''
                             : 'منذ ${formatHM(_prayer.now.difference(prev.value))}',
                       ),
+                      const SizedBox(width: 20),
                       _prayerBox(
                         width,
                         emerald,
@@ -283,14 +331,14 @@ class _HomepageState extends State<Homepage> {
                         children: [
                           Image.asset(
                             'assets/buttons/$index.png',
-                            height: 45,
-                            width: 45,
+                            height: 60,
+                            width: 60,
                           ),
                           Text(
                             _titles[index],
                             style: const TextStyle(
                               fontFamily: 'ar',
-                              color: cream,
+                              color: read,
                               fontSize: 18,
                             ),
                           ),
@@ -299,6 +347,44 @@ class _HomepageState extends State<Homepage> {
                     ),
                   );
                 },
+              ),
+              const SizedBox(height: 5),
+              SizedBox(
+                height: width * .35,
+                width: width,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(backgroundColor: emerald,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Reciterspage()),
+                    );
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const Text(
+                        'تلاوات متنوعة ',
+                        style: TextStyle(
+                            fontFamily: 'ar',
+                            fontSize: 30,
+                            color: cream,
+                            fontWeight: FontWeight.bold
+                        ),
+                      ),
+                      Image.asset(
+                        'assets/6.png',
+                        width: width * .25,
+                        height: width * .25,
+                      ),
+                    ],
+                  ),
+                ),
               ),
               const SizedBox(height: 20),
               const SocialFooter(),

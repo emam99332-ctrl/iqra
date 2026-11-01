@@ -8,6 +8,7 @@ import 'package:iqra/services/reciter_downloads.dart';
 import 'package:iqra/services/radio_service.dart';
 import 'package:audio_service/audio_service.dart';
 import 'package:iqra/services/notif_art.dart';
+import 'package:iqra/services/way2quran_service.dart';
 
 class QuranAudio extends ChangeNotifier {
 
@@ -77,7 +78,8 @@ class QuranAudio extends ChangeNotifier {
 
   Future<void> playFromSurah(int startSurah, {int startAyah = 1, bool stopAtSurahEnd = false}) async {
     final session = ++_session;
-    unawaited(RadioService.instance.stop());
+    await RadioService.instance.stop();
+    await SurahAudio.instance.stop();
     isPlaying = true;
     isRepeating = false;
     notifyListeners();
@@ -125,6 +127,8 @@ class QuranAudio extends ChangeNotifier {
 
   Future<void> repeatAyah(Ayah ayah, {int times = repeatCount}) async {
     final session = ++_session;
+    await RadioService.instance.stop();
+    await SurahAudio.instance.stop();
     isPlaying = true;
     isRepeating = true;
     playingSurah = null;

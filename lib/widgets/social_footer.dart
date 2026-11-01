@@ -34,16 +34,20 @@ class SocialFooter extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 10),
       decoration: BoxDecoration(
-        color: backgroundColor,
+        gradient: LinearGradient(
+          colors: [
+            gold.withOpacity(.9),
+            read.withOpacity(.9),
+          ],
+        ),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Column(
-
         children: [
           Align(alignment: Alignment.centerLeft,
               child: Text('Developed By Eng.Emam Mohamed \n',
                 textAlign: TextAlign.left,
-                style: TextStyle(color: cream,
+                style: TextStyle(color: emerald,
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                     fontFamily: 'ar'
@@ -80,7 +84,7 @@ class SocialFooter extends StatelessWidget {
           ),
           Text('\n© 2026 — جميع الحقوق محفوظة',
             textAlign: TextAlign.left,
-            style: TextStyle(color: cream,
+            style: TextStyle(color: emerald,
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
                 fontFamily: 'ar'

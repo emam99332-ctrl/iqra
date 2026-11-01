@@ -1,4 +1,3 @@
-
 import 'dart:async';
 import 'dart:convert';
 import 'package:iqra/services/notif_art.dart';
@@ -7,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:just_audio/just_audio.dart';
 import '../models/radio_station.dart';
+import 'package:iqra/services/way2quran_service.dart';
 
 class RadioService extends ChangeNotifier {
   RadioService._() {
@@ -122,6 +122,7 @@ class RadioService extends ChangeNotifier {
     notifyListeners();
 
     try {
+      await SurahAudio.instance.stop();
       final urls = channel.url == null
           ? (_urls ??= await _candidates())
           : [channel.url!];

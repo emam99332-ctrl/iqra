@@ -68,8 +68,8 @@ class _QiblapageState extends State<Qiblapage> {
           onPressed: () => Navigator.maybePop(context),
         ),
         elevation: 0,
-        foregroundColor: emerald,
-        backgroundColor: cream,
+        foregroundColor: gold,
+        backgroundColor: emerald,
         title: Text(
           'اتجاه القبلة',
           style: titleStyle(),
