@@ -20,7 +20,7 @@ class ReciterSettings extends ChangeNotifier {
     ReciterOption('husary', 'محمود خليل الحصري', 'https://everyayah.com/data/Husary_128kbps_Mujawwad'),
     ReciterOption('abdulbasit', 'عبد الباسط عبدالصمد', 'https://everyayah.com/data/Abdul_Basit_Mujawwad_128kbps'),
     ReciterOption('minshawy','المنشاوي', 'https://everyayah.com/data/Minshawy_Mujawwad_192kbps'),
-    ReciterOption('minshawy','(معلم) المنشاوي', 'https://everyayah.com/data/Minshawy_Teacher_128kbps'),
+    ReciterOption('minshawyteacher','(معلم) المنشاوي', 'https://everyayah.com/data/Minshawy_Teacher_128kbps'),
     ReciterOption('muhammad-mahmoud-al-tablawi', 'محمد محمود الطبلاوي', 'https://everyayah.com/data/Mohammad_al_Tablaway_64kbps'),
     ReciterOption('mustafa-ismail', 'مصطفى إسماعيل', 'https://everyayah.com/data/Mustafa_Ismail_48kbps'),
     ReciterOption('jibreel', 'محمد جبريل', 'https://everyayah.com/data/Muhammad_Jibreel_128kbps'),

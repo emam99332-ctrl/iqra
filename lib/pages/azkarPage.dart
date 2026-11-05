@@ -90,6 +90,7 @@ class _AzkarpageState extends State<Azkarpage> {
               Padding(
                 padding: const EdgeInsets.all(12),
                 child: TextField(
+                  textDirection: TextDirection.rtl,
                   textAlign: TextAlign.right,
                   cursorColor: emerald,
                   decoration: const InputDecoration(

@@ -1,7 +1,7 @@
 name: iqra
 description: "Iqra app"
 publish_to: 'none'
-version: 1.0.0+1
+version: 1.3.0+2
 
 environment:
   sdk: ^3.12.2
@@ -44,6 +44,7 @@ flutter:
     - assets/data/
     - assets/reciters/
     - assets/icons/
+    - assets/splash/
   fonts:
     - family: Amiri
       fonts:
@@ -66,16 +67,25 @@ flutter:
 flutter_launcher_icons:
   android: true
   ios: true
-  image_path: "assets/logo.png"
+  image_path: "assets/splash/light_logo.png"
   adaptive_icon_background: "#FAF6EC"
-  adaptive_icon_foreground: "assets/logo.png"
+  adaptive_icon_foreground: "assets/splash/light_logo.png"
 
 flutter_native_splash:
   color: "#FAF6EC"
-  image: assets/logo.png
-
+  image: assets/splash/light_logo.png
   color_dark: "#03382B"
-  image_dark: assets/logo.png
+  image_dark: assets/splash/dark_logo.png
+  branding: assets/splash/light_brand.png
+  branding_dark: assets/splash/dark_brand.png
+
+  android_12:
+    color: "#FAF6EC"
+    image: assets/splash/light_logo.png
+    branding: assets/splash/light_brand.png
+    color_dark: "#03382B"
+    image_dark: assets/splash/dark_logo.png
+    branding_dark: assets/splash/dark_brand.png
 
   android: true
   ios: true

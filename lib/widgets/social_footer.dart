@@ -32,65 +32,83 @@ class SocialFooter extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 10),
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            gold.withOpacity(.9),
-            read.withOpacity(.9),
-          ],
-        ),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Column(
-        children: [
-          Align(alignment: Alignment.centerLeft,
-              child: Text('Developed By Eng.Emam Mohamed \n',
-                textAlign: TextAlign.left,
-                style: TextStyle(color: emerald,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'ar'
-                ),
-              )
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey,
+            spreadRadius: 3,
+            blurRadius: 7,
+            offset: Offset(1, 2),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              _socialIcon(
-                iconPath: 'assets/icons/whatsapp.svg',
-                label: 'WhatsApp',
-                onTap: () => _openLink(
-                  'https://wa.me/201119491439',
-                ),
-              ),
-              const SizedBox(width: 24),
-              _socialIcon(
-                iconPath: 'assets/icons/phone.svg',
-                label: 'Phone',
-                onTap: () => _openLink(
-                  'tel:+201119491439',
-                ),
-              ),
-              const SizedBox(width: 24),
-              _socialIcon(
-                iconPath: 'assets/icons/linkedin.svg',
-                label: 'LinkedIn',
-                onTap: () => _openLink(
-                  'https://www.linkedin.com/in/emem-mohamed/',
-                ),
-              ),
+        ],
+        image: DecorationImage(
+          image: AssetImage('assets/dashboard.png'),
+          fit: BoxFit.cover,
+        ),
+        borderRadius: BorderRadius.circular(25),
+      ),
+      child: Container(
+        padding: EdgeInsets.all(8),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              read.withValues(alpha: .7),
+              gold.withValues(alpha: .7),
             ],
           ),
-          Text('\n© 2026 — جميع الحقوق محفوظة',
-            textAlign: TextAlign.left,
-            style: TextStyle(color: emerald,
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'ar'
+          borderRadius: BorderRadius.circular(25),
+        ),
+        child: Column(
+          children: [
+            Align(alignment: Alignment.centerLeft,
+                child: Text('Developed By Eng.Emam Mohamed \n',
+                  textAlign: TextAlign.left,
+                  style: TextStyle(color: emerald,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'ar'
+                  ),
+                )
             ),
-          )
-        ],
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                _socialIcon(
+                  iconPath: 'assets/icons/whatsapp.svg',
+                  label: 'WhatsApp',
+                  onTap: () => _openLink(
+                    'https://wa.me/201119491439',
+                  ),
+                ),
+                const SizedBox(width: 24),
+                _socialIcon(
+                  iconPath: 'assets/icons/phone.svg',
+                  label: 'Phone',
+                  onTap: () => _openLink(
+                    'tel:+201119491439',
+                  ),
+                ),
+                const SizedBox(width: 24),
+                _socialIcon(
+                  iconPath: 'assets/icons/linkedin.svg',
+                  label: 'LinkedIn',
+                  onTap: () => _openLink(
+                    'https://www.linkedin.com/in/emem-mohamed/',
+                  ),
+                ),
+              ],
+            ),
+            Text('\n© 2026 — جميع الحقوق محفوظة',
+              textAlign: TextAlign.left,
+              style: TextStyle(color: emerald,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'ar'
+              ),
+            )
+          ],
+        ),
+
       ),
     );
   }

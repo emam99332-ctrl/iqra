@@ -77,6 +77,7 @@ class _ReciterspageState extends State<Reciterspage> {
             child: TextField(
               textAlign: TextAlign.right,
               cursorColor: emerald,
+              textDirection: TextDirection.rtl,
               decoration: const InputDecoration(
                 hintText: '...ابحث عن شيخ',
                 hintStyle: TextStyle(fontFamily: 'ar', color: gold),
@@ -283,7 +284,11 @@ class _ReciterSurahspageState extends State<ReciterSurahspage> {
           IconButton(
             tooltip: 'تحديث القائمة',
             icon: const Icon(Icons.refresh),
-            onPressed: () => setState(() => _future = _load(refresh: true)),
+            onPressed: () {
+              setState(() {
+                _future = _load(refresh: true);
+              });
+            },
           ),
         ],
       ),
@@ -328,6 +333,7 @@ class _ReciterSurahspageState extends State<ReciterSurahspage> {
                       color: gold),
                 ),
               ),
+              Divider(),
               Expanded(
                 child: ListenableBuilder(
                   listenable: audio,

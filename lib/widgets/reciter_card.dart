@@ -56,28 +56,31 @@ class ReciterCard extends StatelessWidget {
                 ],
               ),
             ),
-            Positioned(
-              bottom: 12,
-              left: 12,
-              right: 12,
-              child: Text(textAlign: TextAlign.right,
-                name,
-                maxLines: 1,
-                style: const TextStyle(
-                  color: gold,
-                  fontSize: 13,
-                  fontFamily: 'ar',
-                  fontWeight: FontWeight.bold,
-                  shadows: [
-                    Shadow(
-                      offset: Offset(0, 1),
-                      blurRadius: 2,
-                      color: Colors.black45,
+            Directionality(
+                textDirection: TextDirection.rtl,
+                child: Positioned(
+                  bottom: 12,
+                  left: 12,
+                  right: 12,
+                  child: Text(textAlign: TextAlign.right,
+                    name,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      color: gold,
+                      fontSize: 13,
+                      fontFamily: 'ar',
+                      fontWeight: FontWeight.bold,
+                      shadows: [
+                        Shadow(
+                          offset: Offset(0, 1),
+                          blurRadius: 2,
+                          color: Colors.black45,
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-              ),
-            ),
+                  ),
+                )),
             if (selected) ...[
               Positioned.fill(
                 child: IgnorePointer(

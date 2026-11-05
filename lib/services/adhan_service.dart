@@ -20,12 +20,14 @@ class AdhanService extends ChangeNotifier {
     Muezzin('makkah', 'أذان مكة', 'adhan_makkah'),
     Muezzin('madinah', 'أذان المدينة', 'adhan_madinah'),
     Muezzin('alaqsa', 'أذان المسجد الأقصى', 'adhan_alaqsa'),
-    Muezzin('fajr', 'الشيخ عبدالباسط عبدالصمد - الفجر', 'adhan_fajr'),
-    Muezzin('mishary', 'الشيخ مشاري العفاسي', 'adhan_mishary'),
     Muezzin('hosari', 'الشيخ محمود الحصرى', 'adhan_hosari'),
+    Muezzin('tobar', 'الشيخ نصرالدين طوبار', 'adhan_tobar'),
     Muezzin('refaat', 'الشيخ محمد رفعت', 'adhan_refaat'),
     Muezzin('said', 'الشيخ سيد النقشبندى', 'adhan_said'),
     Muezzin('zahbi', 'الشيخ عبدالله الذهبى', 'adhan_zahbi'),
+    Muezzin('mishary', 'الشيخ مشاري العفاسي', 'adhan_mishary'),
+    Muezzin('fajra', 'الشيخ عبدالباسط عبدالصمد - الفجر', 'adhan_fajr'),
+    Muezzin('fajrt', 'الشيخ نصرالدين طوبار - الفجر', 'adhan_fajr_tabar'),
   ];
 
   static const _daysAhead = 20;

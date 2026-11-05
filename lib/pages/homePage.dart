@@ -77,7 +77,7 @@ class _HomepageState extends State<Homepage> {
         ],
         image: DecorationImage(
           image: AssetImage('assets/dashboard.png'),
-          fit: BoxFit.fill,
+          fit: BoxFit.cover,
         ),
         borderRadius: BorderRadius.circular(25),
       ),
@@ -86,8 +86,8 @@ class _HomepageState extends State<Homepage> {
         decoration: BoxDecoration(
           // gradient: LinearGradient(
           //   colors: [
-          //     read.withOpacity(.7),
-          //     color.withOpacity(.7),
+          //     read.withValues(alpha: .7),
+          //     color.withValues(alpha: .7),
           //   ],
           // ),
           color: color.withValues(alpha: .7),

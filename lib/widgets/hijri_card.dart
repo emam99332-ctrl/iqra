@@ -44,8 +44,8 @@ class HijriCard extends StatelessWidget {
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [
-                  gold.withOpacity(.7),
-                  read.withOpacity(.7),
+                  gold.withValues(alpha: .7),
+                  read.withValues(alpha: .7),
                 ],
               ),
               borderRadius: BorderRadius.circular(25),
@@ -65,7 +65,7 @@ class HijriCard extends StatelessWidget {
                         style: TextStyle(
                           fontFamily: 'Kufi',
                           fontSize: 22,
-                          color: emerald.withOpacity(.7),
+                          color: emerald.withValues(alpha: .7),
                           fontWeight: FontWeight.bold,
                         ),
                       ),

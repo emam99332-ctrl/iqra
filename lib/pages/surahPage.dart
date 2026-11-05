@@ -72,6 +72,7 @@ class _SurahState extends State<Surahpage>{
           Padding(padding: EdgeInsets.all(12),
           child: TextField(textAlign: TextAlign.right,
             controller: _search,
+            textDirection: TextDirection.rtl,
             cursorColor: emerald,
             style: TextStyle(color: Colors.black),decoration: InputDecoration(
             hintText: '... ابحث عن السورة',

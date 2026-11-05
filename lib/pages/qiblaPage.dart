@@ -72,7 +72,7 @@ class _QiblapageState extends State<Qiblapage> {
         backgroundColor: emerald,
         title: Text(
           'اتجاه القبلة',
-          style: titleStyle(),
+          style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Kufi',fontSize: 26)
         ),
         centerTitle: true,
       ),

@@ -13,8 +13,8 @@ import 'package:iqra/services/radio_service.dart';
 class W2QReciter {
   final String slug;
   final String name;
-  final String? q;
-  final String? asset;
+  final String? q;     // جزء من الاسم للبحث في mp3quran (إن كان null يُستخدم way2quran)
+  final String? asset; // صورة محلية
   const W2QReciter(this.slug, this.name, {this.q, this.asset});
 
   String get thumbUrl => 'https://media.way2quran.com/imgs/thumbs/$slug.webp';
@@ -30,6 +30,7 @@ class W2QTrack {
 
 class Way2Quran {
   static const reciters = [
+
     W2QReciter('husary', 'محمود خليل الحصري', q: 'الحصري', asset: 'assets/reciters/0.png'),
     W2QReciter('abdulbasit', 'عبد الباسط عبد الصمد', q: 'عبد الباسط', asset: 'assets/reciters/1.png'),
     W2QReciter('minshawy', 'محمد صديق المنشاوي', q: 'المنشاوي', asset: 'assets/reciters/2.png'),
@@ -48,6 +49,9 @@ class Way2Quran {
 
   static final Map<String, List<W2QTrack>> _mem = {};
 
+  static final _mp3 = RegExp(
+      r'https://media\.way2quran\.com/([^/"\\\s<>]+)/([^/"\\\s<>]+)/(\d+)\.mp3');
+
   static String _n(String s) => s
       .replaceAll(RegExp(r'[\u064B-\u065F\u0670]'), '')
       .replaceAll(RegExp('[أإآ]'), 'ا')
@@ -55,11 +59,12 @@ class Way2Quran {
       .replaceAll('ى', 'ي')
       .replaceAll(RegExp(r'\s+'), '');
 
+  /// السور المتاحة للشيخ (من الكاش، وإلا من المصدر)
   static Future<List<W2QTrack>> tracks(W2QReciter r,
       {bool refresh = false}) async {
     if (!refresh && _mem.containsKey(r.slug)) return _mem[r.slug]!;
 
-    final cacheName = 'w2q_v2_${r.slug}.json';
+    final cacheName = 'w2q_${r.slug}.json';
     if (!refresh) {
       try {
         final d = await OfflineStore.readJson(cacheName);
@@ -90,24 +95,34 @@ class Way2Quran {
     (jsonDecode(utf8.decode(res.bodyBytes))['reciters'] as List).cast<Map>();
 
     final q = _n(r.q!);
-    final exact = all.where((e) => _n('${e['name']}') == q).toList();
-    final found = exact.isNotEmpty
-        ? exact
-        : all.where((e) => _n('${e['name']}').contains(q)).toList();
+    final wantsTeacher = q.contains('معلم');
+
+    var found = all.where((e) => _n('${e['name']}') == q).toList();
+    if (found.isEmpty) {
+      found = all.where((e) => _n('${e['name']}').contains(q)).toList();
+    }
     if (found.isEmpty) throw Exception('الشيخ غير موجود في المصدر');
 
+    // نجمع كل المصاحف من السجلات المطابقة ونختار الأنسب
+    final moshafs = <Map>[
+      for (final e in found) ...(e['moshaf'] as List).cast<Map>(),
+    ];
     int total(Map m) => int.tryParse('${m['surah_total']}') ?? 0;
+    int score(Map m) {
+      final n = _n('${m['name']}');
+      var s = total(m);
+      if (m['rewaya_id'] == 1) s += 1000;
+      if (n.contains('مرتل')) s += 500;
+      if (!wantsTeacher && n.contains('معلم')) s -= 5000;
+      return s;
+    }
+
     Map? best;
-    for (final m in (found.first['moshaf'] as List).cast<Map>()) {
-      final isHafs = m['rewaya_id'] == 1;
-      final bestHafs = best != null && best['rewaya_id'] == 1;
-      if (best == null ||
-          (isHafs && !bestHafs) ||
-          (isHafs == bestHafs && total(m) > total(best))) {
-        best = m;
-      }
+    for (final m in moshafs) {
+      if (best == null || score(m) > score(best)) best = m;
     }
     if (best == null) throw Exception('لا توجد تلاوات لهذا الشيخ');
+
 
     var server = '${best['server']}';
     if (!server.endsWith('/')) server += '/';
@@ -124,66 +139,39 @@ class Way2Quran {
 
   // ───────────── المصدر الثاني: way2quran.com (قراءة الصفحة) ─────────────
 
-  static final _anyMp3 =
-  RegExp(r'https?://[^"\s<>\\]+?/(\d{1,3})\.mp3');
-
   static Future<List<W2QTrack>> _way2quran(W2QReciter r) async {
     final res = await http
-        .get(Uri.parse(r.pageUrl), headers: {'User-Agent': 'Mozilla/5.0'})
+        .get(Uri.parse(r.pageUrl))
         .timeout(const Duration(seconds: 25));
-
     if (res.statusCode != 200) {
       throw Exception('خطأ في الاتصال: ${res.statusCode}');
     }
-
     final html = utf8
         .decode(res.bodyBytes)
         .replaceAll(r'\/', '/')
-        .replaceAll(r'\u002F', '/')
-        .replaceAll('&amp;', '&');
+        .replaceAll(r'\u002F', '/');
 
-    final groups = <String, Map<int, String>>{};
+    var matches = _mp3.allMatches(html).toList();
+    final own = matches.where((m) => m[1] == r.slug).toList();
+    if (own.isNotEmpty) matches = own;
 
-    for (final m in _anyMp3.allMatches(html)) {
-      final n = int.parse(m[1]!);
-
+    final byRiwaya = <String, Map<int, String>>{};
+    for (final m in matches) {
+      final n = int.parse(m[3]!);
       if (n < 1 || n > 114) continue;
-
-      final url = m[0]!;
-      final dir = url.substring(0, url.lastIndexOf('/'));
-
-      groups.putIfAbsent(dir, () => {})[n] = url;
+      byRiwaya.putIfAbsent(m[2]!, () => {})[n] = m[0]!;
     }
-
-    if (groups.isEmpty) {
-      throw Exception('لم أجد روابط صوت في الصفحة (${html.length} حرف)');
+    if (byRiwaya.isEmpty) {
+      throw Exception('تعذر قراءة السور المتاحة لهذا الشيخ من الموقع');
     }
-
-    final keys = groups.keys.toList()
-      ..sort((a, b) {
-        final ha = a.toLowerCase().contains('hafs') ? 1 : 0;
-        final hb = b.toLowerCase().contains('hafs') ? 1 : 0;
-
-        if (ha != hb) return hb - ha;
-
-        return groups[b]!.length.compareTo(groups[a]!.length);
-      });
-
-    final allTracks = <int, String>{};
-
-    for (final key in keys) {
-      for (final entry in groups[key]!.entries) {
-        allTracks.putIfAbsent(entry.key, () => entry.value);
-      }
-    }
-
-    if (allTracks.isEmpty) {
-      throw Exception('لا توجد سور لهذا الشيخ');
-    }
+    String? key = byRiwaya.containsKey('hafs-an-asim') ? 'hafs-an-asim' : null;
+    key ??= (byRiwaya.keys.toList()
+      ..sort((a, b) =>
+          byRiwaya[b]!.length.compareTo(byRiwaya[a]!.length)))
+        .first;
 
     return [
-      for (final entry in allTracks.entries)
-        W2QTrack(entry.key, entry.value),
+      for (final e in byRiwaya[key]!.entries) W2QTrack(e.key, e.value),
     ]..sort((a, b) => a.surah.compareTo(b.surah));
   }
 }
