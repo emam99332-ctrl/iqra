@@ -3,6 +3,7 @@ import 'package:iqra/models/surah.dart';
 import 'package:iqra/pages/moshafPage.dart';
 import 'package:iqra/services/apiService.dart';
 import 'package:iqra/styles/style.dart';
+import 'package:iqra/widgets/last_read_card.dart';
 
 class Surahpage extends StatefulWidget {
   const Surahpage({super.key});
@@ -110,6 +111,7 @@ class _SurahState extends State<Surahpage>{
             },
           ),
           ),
+          const LastReadCard(),
           FutureBuilder<List<Surah>>(future: ApiService.getSurahs(), builder: (context, snap){
             if(snap.connectionState == ConnectionState.waiting){
               return Center(child: CircularProgressIndicator(color: emerald,));

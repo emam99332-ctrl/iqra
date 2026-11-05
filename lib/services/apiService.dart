@@ -45,6 +45,7 @@ class ApiService {
     _quranTried = true;
     _surahs = null;
     _surahCache.clear();
+    _pageCache.clear(); // ← جديد
   }
 
   static Future<dynamic> _get(String path) async {
@@ -131,6 +132,7 @@ class ApiService {
   }
 
   static final Map<int, List<Ayah>> _surahCache = {};
+  static final Map<int, List<Ayah>> _pageCache = {}; // ← جديد
 
   static Future<List<Ayah>> getSurahAyahs(int surah) async {
     if (_surahCache.containsKey(surah)) return _surahCache[surah]!;
@@ -147,6 +149,37 @@ class ApiService {
     final name = data['name'] as String;
     return _surahCache[surah] = [
       for (final a in data['ayahs'] as List) Ayah.fromParts(a, surah, name),
+    ];
+  }
+
+  /// آيات صفحة من مصحف المدينة (1 → 604)
+  static Future<List<Ayah>> getPageAyahs(int page) async {
+    if (_pageCache.containsKey(page)) return _pageCache[page]!;
+
+    // 1) أوفلاين: من المصحف المحمّل (كل آية فيها حقل page)
+    await _loadQuran();
+    final raw = _quranRaw;
+    if (raw != null) {
+      final out = <Ayah>[];
+      for (final s in raw) {
+        final num = s['number'] as int;
+        final name = s['name'] as String;
+        for (final a in s['ayahs'] as List) {
+          if (a['page'] == page) out.add(Ayah.fromParts(a, num, name));
+        }
+      }
+      if (out.isNotEmpty) return _pageCache[page] = out;
+    }
+
+    // 2) أونلاين: كل آية في رد الصفحة جواها بيانات سورتها
+    final data = await _get('page/$page/quran-uthmani');
+    return _pageCache[page] = [
+      for (final a in data['ayahs'] as List)
+        Ayah.fromParts(
+          a,
+          a['surah']['number'] as int,
+          a['surah']['name'] as String,
+        ),
     ];
   }
 

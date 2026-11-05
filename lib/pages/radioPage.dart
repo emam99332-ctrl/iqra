@@ -19,8 +19,29 @@ class Radiopage extends StatelessWidget {
 
   Future<void> _onSelect(BuildContext context, int i) async {
     final error = await RadioService.instance.selectChannel(i);
-    if (error == null || !context.mounted) return;
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(error)));
+
+    if (error != null && context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(error)),
+      );
+    }
+  }
+
+  void _previousChannel(BuildContext context) {
+    final current = RadioService.instance.selected;
+    final previous =
+        (current - 1 + RadioService.channels.length) %
+            RadioService.channels.length;
+
+    _onSelect(context, previous);
+  }
+
+  void _nextChannel(BuildContext context) {
+    final current = RadioService.instance.selected;
+    final next =
+        (current + 1) % RadioService.channels.length;
+
+    _onSelect(context, next);
   }
 
   @override
@@ -84,29 +105,67 @@ class Radiopage extends StatelessWidget {
 
                       const SizedBox(height: 28),
 
-                      Stack(
-                        alignment: Alignment.center,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          if (loading)
-                            SizedBox(
-                              width: 96,
-                              height: 96,
-                              child: CircularProgressIndicator(
-                                color: emerald,
-                              ),
-                            ),
+                          // المحطة السابقة
                           IconButton.filled(
-                            iconSize: 48,
+                            onPressed: loading ? null : () => _previousChannel(context),
+                            icon: const Icon(Icons.skip_previous_rounded),
+                            iconSize: 32,
                             style: IconButton.styleFrom(
                               backgroundColor: emerald,
                               foregroundColor: cream,
                             ),
-                            icon: Icon(
-                              playing || loading ? Icons.stop : Icons.play_arrow,
+                          ),
+
+                          const SizedBox(width: 24),
+
+                          // تشغيل وإيقاف الراديو
+                          SizedBox(
+                            width: 80,
+                            height: 80,
+                            child: Stack(
+                              alignment: Alignment.center,
+                              children: [
+                                if (loading)
+                                  const SizedBox(
+                                    width: 76,
+                                    height: 76,
+                                    child: CircularProgressIndicator(
+                                      color: emerald,
+                                    ),
+                                  ),
+                                IconButton.filled(
+                                  iconSize: 48,
+                                  style: IconButton.styleFrom(
+                                    backgroundColor: emerald,
+                                    foregroundColor: cream,
+                                  ),
+                                  icon: Icon(
+                                    playing || loading
+                                        ? Icons.stop
+                                        : Icons.play_arrow,
+                                  ),
+                                  onPressed: radio.isStarting
+                                      ? null
+                                      : () => _onToggle(context),
+                                ),
+                              ],
                             ),
-                            onPressed: radio.isStarting
-                                ? null
-                                : () => _onToggle(context),
+                          ),
+
+                          const SizedBox(width: 24),
+
+                          // المحطة التالية
+                          IconButton.filled(
+                            onPressed: loading ? null : () => _nextChannel(context),
+                            icon: const Icon(Icons.skip_next_rounded),
+                            iconSize: 32,
+                            style: IconButton.styleFrom(
+                              backgroundColor: emerald,
+                              foregroundColor: cream,
+                            ),
                           ),
                         ],
                       ),
@@ -228,6 +287,16 @@ class _ChannelPagerState extends State<_ChannelPager> {
     super.dispose();
   }
 
+  void _changePage(int i) {
+    if (!_c.hasClients) return;
+
+    _c.animateToPage(
+      i,
+      duration: const Duration(milliseconds: 350),
+      curve: Curves.easeInOut,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -268,21 +337,32 @@ class _ChannelPagerState extends State<_ChannelPager> {
         ),
         ListenableBuilder(
           listenable: radio,
-          builder: (context, _) => Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              for (var i = 0; i < RadioService.channels.length; i++)
-                Container(
-                  width: i == radio.selected ? 18 : 8,
-                  height: 8,
-                  margin: const EdgeInsets.all(3),
-                  decoration: BoxDecoration(
-                    color: i == radio.selected ? emerald : gold,
-                    borderRadius: BorderRadius.circular(4),
+          builder: (context, _) {
+            if (_c.hasClients &&
+                (_c.page?.round() ?? _c.initialPage) != radio.selected) {
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                if (mounted && _c.hasClients) {
+                  _changePage(radio.selected);
+                }
+              });
+            }
+
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                for (var i = 0; i < RadioService.channels.length; i++)
+                  Container(
+                    width: i == radio.selected ? 18 : 8,
+                    height: 8,
+                    margin: const EdgeInsets.all(3),
+                    decoration: BoxDecoration(
+                      color: i == radio.selected ? emerald : gold,
+                      borderRadius: BorderRadius.circular(4),
+                    ),
                   ),
-                ),
-            ],
-          ),
+              ],
+            );
+          },
         ),
       ],
     );

@@ -212,30 +212,32 @@ class _HomepageState extends State<Homepage> {
                 builder: (context, _) {
                   final prev = _prayer.previous;
                   final next = _prayer.next;
-                  return Row(
-                    children: [
-                      _prayerBox(
-                        width,
-                        gold,
-                        'الصلاة السابقة',
-                        prev?.key ?? '_',
-                        prev == null ? '—' : formatTime(prev.value),
-                        prev == null
-                            ? ''
-                            : 'منذ ${formatHM(_prayer.now.difference(prev.value))}',
-                      ),
-                      const SizedBox(width: 20),
-                      _prayerBox(
-                        width,
-                        emerald,
-                        'الصلاة القادمة',
-                        next?.key ?? '—',
-                        next == null ? '—' : formatTime(next.value),
-                        next == null
-                            ? ''
-                            : 'بعد ${formatHM(_prayer.remaining)}',
-                      ),
-                    ],
+                  return Center(
+                      child: Row(
+                        children: [
+                          _prayerBox(
+                            width,
+                            gold,
+                            'الصلاة السابقة',
+                            prev?.key ?? '_',
+                            prev == null ? '—' : formatTime(prev.value),
+                            prev == null
+                                ? ''
+                                : 'منذ ${formatHM(_prayer.now.difference(prev.value))}',
+                          ),
+                          const SizedBox(width: 20),
+                          _prayerBox(
+                            width,
+                            emerald,
+                            'الصلاة القادمة',
+                            next?.key ?? '—',
+                            next == null ? '—' : formatTime(next.value),
+                            next == null
+                                ? ''
+                                : 'بعد ${formatHM(_prayer.remaining)}',
+                          ),
+                        ],
+                      )
                   );
                 },
               ),
@@ -255,23 +257,25 @@ class _HomepageState extends State<Homepage> {
                       MaterialPageRoute(builder: (context) => Surahpage()),
                     );
                   },
-                  child: Row(
-                    children: [
-                      const Text(
-                        'القرأن الكريم  ',
-                        style: TextStyle(
-                          fontFamily: 'ar',
-                          fontSize: 30,
-                          color: cream,
-                          fontWeight: FontWeight.bold
+                  child: Center(
+                    child: Row(
+                      children: [
+                        const Text(
+                          'القرأن الكريم  ',
+                          style: TextStyle(
+                              fontFamily: 'ar',
+                              fontSize: 30,
+                              color: cream,
+                              fontWeight: FontWeight.bold
+                          ),
                         ),
-                      ),
-                      Image.asset(
-                        'assets/qlogo.png',
-                        width: width * .25,
-                        height: width * .25,
-                      ),
-                    ],
+                        Image.asset(
+                          'assets/qlogo.png',
+                          width: width * .25,
+                          height: width * .25,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),

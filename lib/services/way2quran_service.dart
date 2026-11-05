@@ -15,7 +15,11 @@ class W2QReciter {
   final String name;
   final String? q;     // جزء من الاسم للبحث في mp3quran (إن كان null يُستخدم way2quran)
   final String? asset; // صورة محلية
-  const W2QReciter(this.slug, this.name, {this.q, this.asset});
+  final String? style; // نوع المصحف المطلوب مثل: 'مجود'
+  const W2QReciter(this.slug, this.name, {this.q, this.asset, this.style});
+
+  /// مفتاح الكاش والتحميلات (مختلف لو في style عشان الملفات ما تتلخبطش)
+  String get storeKey => style == null ? slug : '$slug-mj';
 
   String get thumbUrl => 'https://media.way2quran.com/imgs/thumbs/$slug.webp';
   String get imageUrl => 'https://media.way2quran.com/imgs/$slug.jpg';
@@ -33,12 +37,11 @@ class Way2Quran {
 
     W2QReciter('husary', 'محمود خليل الحصري', q: 'الحصري', asset: 'assets/reciters/0.png'),
     W2QReciter('abdulbasit', 'عبد الباسط عبد الصمد', q: 'عبد الباسط', asset: 'assets/reciters/1.png'),
-    W2QReciter('minshawy', 'محمد صديق المنشاوي', q: 'المنشاوي', asset: 'assets/reciters/2.png'),
+    W2QReciter('minshawy', 'محمد صديق المنشاوي', q: 'المنشاوي', style: 'مجود', asset: 'assets/reciters/2.png'),
     W2QReciter('muhammad-jibreel', 'محمد جبريل', q: 'جبريل', asset: 'assets/reciters/6.png'),
-    W2QReciter('muhammad-mahmoud-al-tablawi', 'محمد محمود الطبلاوي', q: 'محمد الطبلاوي',),
-    W2QReciter('mustafa-ismail', 'مصطفى إسماعيل'),
+    W2QReciter('muhammad-mahmoud-al-tablawi', 'محمد محمود الطبلاوي', q: 'محمد الطبلاوي',asset: 'assets/reciters/4.png',),
+    W2QReciter('mustafa-ismail', 'مصطفى إسماعيل', asset: 'assets/reciters/5.png',),
     W2QReciter('mohamed-refaat', 'محمد رفعت'),
-    W2QReciter('kaml-yusuf-al-bhtymy', 'كامل يوسف البهتيمي'),
     W2QReciter('alafasy', 'مشاري العفاسي', q: 'العفاسي', asset: 'assets/reciters/7.png'),
     W2QReciter('yasser', 'ياسر الدوسري', q: 'ياسر الدوسري', asset: 'assets/reciters/8.png'),
     W2QReciter('ajamy', 'أحمد العجمي', q: 'العجمي', asset: 'assets/reciters/9.png'),
@@ -50,7 +53,7 @@ class Way2Quran {
   static final Map<String, List<W2QTrack>> _mem = {};
 
   static final _mp3 = RegExp(
-      r'https://media\.way2quran\.com/([^/"\\\s<>]+)/([^/"\\\s<>]+)/(\d+)\.mp3');
+      r'https://media\.way2quran\.com/((?:[^/"\\\s<>]+/)+?)(\d+)\.mp3');
 
   static String _n(String s) => s
       .replaceAll(RegExp(r'[\u064B-\u065F\u0670]'), '')
@@ -62,14 +65,14 @@ class Way2Quran {
   /// السور المتاحة للشيخ (من الكاش، وإلا من المصدر)
   static Future<List<W2QTrack>> tracks(W2QReciter r,
       {bool refresh = false}) async {
-    if (!refresh && _mem.containsKey(r.slug)) return _mem[r.slug]!;
+    if (!refresh && _mem.containsKey(r.storeKey)) return _mem[r.storeKey]!;
 
-    final cacheName = 'w2q_${r.slug}.json';
+    final cacheName = 'w2q_${r.storeKey}.json';
     if (!refresh) {
       try {
         final d = await OfflineStore.readJson(cacheName);
         if (d is List && d.isNotEmpty) {
-          return _mem[r.slug] = [
+          return _mem[r.storeKey] = [
             for (final e in d) W2QTrack(e['s'] as int, e['u'] as String),
           ];
         }
@@ -79,7 +82,7 @@ class Way2Quran {
     final list = r.q != null ? await _mp3quran(r) : await _way2quran(r);
     await OfflineStore.writeJson(
         cacheName, [for (final t in list) {'s': t.surah, 'u': t.url}]);
-    return _mem[r.slug] = list;
+    return _mem[r.storeKey] = list;
   }
 
   // ───────────── المصدر الأول: mp3quran.net (API) ─────────────
@@ -112,7 +115,11 @@ class Way2Quran {
       final n = _n('${m['name']}');
       var s = total(m);
       if (m['rewaya_id'] == 1) s += 1000;
-      if (n.contains('مرتل')) s += 500;
+      if (r.style != null && n.contains(_n(r.style!))) {
+        s += 10000; // المصحف المطلوب (مثل المجوّد) يكسب دايمًا
+      } else if (n.contains('مرتل')) {
+        s += 500;
+      }
       if (!wantsTeacher && n.contains('معلم')) s -= 5000;
       return s;
     }
@@ -140,41 +147,56 @@ class Way2Quran {
   // ───────────── المصدر الثاني: way2quran.com (قراءة الصفحة) ─────────────
 
   static Future<List<W2QTrack>> _way2quran(W2QReciter r) async {
-    final res = await http
-        .get(Uri.parse(r.pageUrl))
-        .timeout(const Duration(seconds: 25));
-    if (res.statusCode != 200) {
-      throw Exception('خطأ في الاتصال: ${res.statusCode}');
-    }
-    final html = utf8
-        .decode(res.bodyBytes)
-        .replaceAll(r'\/', '/')
-        .replaceAll(r'\u002F', '/');
-
-    var matches = _mp3.allMatches(html).toList();
-    final own = matches.where((m) => m[1] == r.slug).toList();
-    if (own.isNotEmpty) matches = own;
-
+    // نجرب صفحة الشيخ وصفحة رواية حفص
+    final pages = [r.pageUrl, '${r.pageUrl}/hafs-an-asim'];
     final byRiwaya = <String, Map<int, String>>{};
-    for (final m in matches) {
-      final n = int.parse(m[3]!);
-      if (n < 1 || n > 114) continue;
-      byRiwaya.putIfAbsent(m[2]!, () => {})[n] = m[0]!;
+    var info = ''; // للتشخيص
+
+    for (final p in pages) {
+      try {
+        final res = await http
+            .get(Uri.parse(p))
+            .timeout(const Duration(seconds: 25));
+        info += ' [${res.statusCode}:${res.bodyBytes.length}]';
+        if (res.statusCode != 200) continue;
+
+        final html = utf8
+            .decode(res.bodyBytes)
+            .replaceAll(r'\/', '/')
+            .replaceAll(r'\u002F', '/');
+
+        var matches = _mp3.allMatches(html).toList();
+        final own =
+        matches.where((m) => m[1]!.startsWith('${r.slug}/')).toList();
+        if (own.isNotEmpty) matches = own;
+
+        for (final m in matches) {
+          final n = int.parse(m[2]!);
+          if (n < 1 || n > 114) continue;
+          byRiwaya.putIfAbsent(m[1]!, () => {})[n] = m[0]!;
+        }
+      } catch (_) {}
     }
+
     if (byRiwaya.isEmpty) {
-      throw Exception('تعذر قراءة السور المتاحة لهذا الشيخ من الموقع');
+      throw Exception('تعذر قراءة السور المتاحة لهذا الشيخ من الموقع$info');
     }
-    String? key = byRiwaya.containsKey('hafs-an-asim') ? 'hafs-an-asim' : null;
+
+    String? key;
+    for (final k in byRiwaya.keys) {
+      if (k.contains('hafs-an-asim')) {
+        key = k;
+        break;
+      }
+    }
     key ??= (byRiwaya.keys.toList()
-      ..sort((a, b) =>
-          byRiwaya[b]!.length.compareTo(byRiwaya[a]!.length)))
+      ..sort((a, b) => byRiwaya[b]!.length.compareTo(byRiwaya[a]!.length)))
         .first;
 
     return [
       for (final e in byRiwaya[key]!.entries) W2QTrack(e.key, e.value),
     ]..sort((a, b) => a.surah.compareTo(b.surah));
-  }
-}
+  }}
 
 class _Cancelled {
   const _Cancelled();
@@ -290,7 +312,7 @@ class SurahAudio extends ChangeNotifier {
   final Set<String> _cancel = {};
   final Set<String> _downloaded = {};
 
-  String _key(W2QReciter r, int s) => '${r.slug}:$s';
+  String _key(W2QReciter r, int s) => '${r.storeKey}:$s';
   String _fileName(int s) => '${s.toString().padLeft(3, '0')}.mp3';
 
   bool isDownloaded(W2QReciter r, int s) => _downloaded.contains(_key(r, s));
@@ -298,7 +320,7 @@ class SurahAudio extends ChangeNotifier {
 
   Future<Directory> _dir(W2QReciter r) async {
     final base = await getApplicationSupportDirectory();
-    final d = Directory('${base.path}/way2/${r.slug}');
+    final d = Directory('${base.path}/way2/${r.storeKey}');
     if (!await d.exists()) await d.create(recursive: true);
     return d;
   }
@@ -310,7 +332,7 @@ class SurahAudio extends ChangeNotifier {
 
   Future<void> refreshDownloaded(W2QReciter r) async {
     final d = await _dir(r);
-    _downloaded.removeWhere((k) => k.startsWith('${r.slug}:'));
+    _downloaded.removeWhere((k) => k.startsWith('${r.storeKey}:'));
     await for (final e in d.list()) {
       if (e is File && e.path.endsWith('.mp3')) {
         final n = int.tryParse(e.uri.pathSegments.last.replaceAll('.mp3', ''));

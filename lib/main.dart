@@ -11,11 +11,14 @@ import 'package:iqra/pages/startupPage.dart';
 import 'package:iqra/pages/surahPage.dart';
 import 'package:iqra/services/apiService.dart';
 import 'package:iqra/services/adhan_service.dart';
+import 'package:iqra/services/last_read.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await LastRead.instance.init();
 
   try {
     await JustAudioBackground.init(
